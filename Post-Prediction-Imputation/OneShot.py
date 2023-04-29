@@ -377,6 +377,6 @@ class OneShotTest:
             p22 = np.mean(t2_sim[:,1] >= t2_obs[1], axis=0)
             p31 = np.mean(t1_sim[:,2] >= t1_obs[2], axis=0)
             p32 = np.mean(t2_sim[:,2] >= t2_obs[2], axis=0)
-            reject = self.holm_bonferroni([p11, p12, p21, p22, p31, p32])
+            reject = self.holm_bonferroni([p31, p32])
 
         return p11, p12, p21, p22, p31, p32, corr_G1, corr_G2, reject

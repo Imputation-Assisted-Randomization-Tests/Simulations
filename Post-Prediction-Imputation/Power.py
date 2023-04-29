@@ -118,7 +118,7 @@ if __name__ == '__main__':
         os.mkdir("Result")
 
     for coef in np.arange(0.02,0.2,0.02):
-        beta_coef = coef
+        beta_coef = coef * 20
         #run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_1000" + "_single")
         #run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
         #run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")
