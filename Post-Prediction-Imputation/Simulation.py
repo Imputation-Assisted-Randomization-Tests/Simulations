@@ -222,12 +222,12 @@ class DataGenerator:
             values[2] = (sum3 + sum4 + U[i] + Y[i, 0] + np.exp(Y[i, 1]))
 
             if values[0] > lambda1:
-              M[i][0] = 1 
+              M[i][0] = 0 
             else:
               M[i][0] = 0
 
             if values[1] > lambda2:
-              M[i][1] =  1 
+              M[i][1] =  0
             else:
               M[i][1] =  0
 

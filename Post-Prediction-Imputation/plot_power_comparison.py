@@ -34,7 +34,7 @@ def plot(data, data_with_U):
     plot_types.plot_results(data, data_with_U)
     plot_unobserved.plot_results(data, data_with_U)
 
-#main("single")
-main("multi")
+main("single")
+#main("multi")
 
 
