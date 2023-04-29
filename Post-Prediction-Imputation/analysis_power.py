@@ -89,7 +89,11 @@ def read_npz_files(directory):
         'median': summed_p_values_median[8] / N,
         'lr': summed_p_values_LR[8] / N,
         'xgboost': summed_p_values_xgboost[8] / N,
-        'oracle': summed_p_values_oracle[8] / N
+        'oracle': summed_p_values_oracle[8] / N,
+        "corr_median": summed_p_values_median[7] / N,
+        "corr_lr": summed_p_values_LR[7] / N,
+        "corr_xgboost": summed_p_values_xgboost[7] / N,
+        "corr_oracle": summed_p_values_oracle[7] / N,
     }
     return results
 

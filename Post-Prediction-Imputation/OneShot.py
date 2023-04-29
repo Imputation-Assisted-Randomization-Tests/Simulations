@@ -88,6 +88,7 @@ class OneShotTest:
             my_list.append((z[i],y[i]))
         sorted_list = sorted(my_list, key=lambda x: x[1])
 
+        print(sorted_list)
         #Calculate
         for i in range(n):
             t += sorted_list[i][0] * (i + 1)
@@ -102,17 +103,23 @@ class OneShotTest:
             df_imputed = df.to_numpy()
             y = df_imputed[:, indexY:indexY + lenY]
             z = df_imputed[:, 0]
+            pd.DataFrame(df_imputed).to_csv('sample/df_imputed_oracle.csv')
+            pd.DataFrame(z).to_csv('sample/z_oracle.csv')
+            pd.DataFrame(y).to_csv('sample/y_oracle.csv')
         else:
             # Get the imputed data Y and indicator Z
             df_imputed = G.transform(df)
             y = df_imputed[:, indexY:indexY + lenY]
             z = df_imputed[:, 0]
+            pd.DataFrame(df_imputed).to_csv('sample/df_imputed_imputation.csv')
+            pd.DataFrame(z).to_csv('sample/z_imputation.csv')
+            pd.DataFrame((y)).to_csv('sample/y_imputation.csv')
         
         t = []
         for i in range(lenY):
             #the Wilcoxon rank sum test
             t.append(self.T(z.reshape(-1,),y[:,i].reshape(-1,)))
-
+        
         return t
 
     def worker(self, args):
@@ -294,8 +301,19 @@ class OneShotTest:
         else:
             df = pd.DataFrame(np.concatenate((Z, X, Y_masked), axis=1))
         
+        pd.DataFrame(Z).to_csv("sample/Z.csv") if verbose else None
+        pd.DataFrame(X).to_csv("sample/X.csv") if verbose else None
+        pd.DataFrame(Y).to_csv("sample/Y.csv") if verbose else None
+        pd.DataFrame(Y_masked).to_csv("sample/Y_masked.csv") if verbose else None
+        
+        
+        
         # split the data into two parts
         df1, df2 = self.split_df(df)
+        if G1 == None or G2 == None:
+            df1.to_csv("sample/df_oracle.csv") if verbose else None
+        else:
+            df1.to_csv("sample/df_missing.csv") if verbose else None
 
         # re-impute the missing values and calculate the observed test statistics in part 2
         t2_obs = np.zeros(Y_masked.shape[1])
@@ -346,13 +364,13 @@ class OneShotTest:
             df1_sim = pd.concat([pd.DataFrame(Z_1), df1_sim], axis=1)
             df2_sim = pd.concat([pd.DataFrame(Z_2), df2_sim], axis=1)
             
-            
-            # get the test statistics in part 1
-            t1_sim[l] = self.getT(G2, df1_sim, Z.shape[1] + X.shape[1], lenY = Y.shape[1])
-            
+
             # get the test statistics in part 2
             t2_sim[l] = self.getT(G1, df2_sim,  Z.shape[1] + X.shape[1], lenY = Y.shape[1])
 
+            # get the test statistics in part 1
+            t1_sim[l] = self.getT(G2, df1_sim, Z.shape[1] + X.shape[1], lenY = Y.shape[1])
+            
             # Calculate the completeness percentage
             if l % 100 == 0:
                 completeness = l / L * 100  
