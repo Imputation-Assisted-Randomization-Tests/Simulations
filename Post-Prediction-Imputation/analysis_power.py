@@ -92,7 +92,7 @@ def read_npz_files(directory):
         'oracle': summed_p_values_oracle[8] / N
     }
     return results
-
+"""
 def main():
     for coef in np.arange(0.02, 0.2, 0.02):
         with open("power.result", "a") as file:
@@ -116,3 +116,4 @@ def main():
 
 main()
 
+"""

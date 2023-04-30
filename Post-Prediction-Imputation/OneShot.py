@@ -100,14 +100,16 @@ class OneShotTest:
             # Get the imputed data Y and indicator Z
             #df_imputed = np.array(df)
             df_imputed = df.to_numpy()
-            y = df_imputed[:, indexY:indexY + lenY]
+            y = df_imputed[:, indexY:df_imputed.shape[1]]
             z = df_imputed[:, 0]
         else:
             # Get the imputed data Y and indicator Z
             df_imputed = G.transform(df)
-            y = df_imputed[:, indexY:indexY + lenY]
+            y = df_imputed[:, indexY:df_imputed.shape[1]]
             z = df_imputed[:, 0]
-        
+
+        assert df_imputed.shape[1] == lenY + indexY
+
         t = []
         for i in range(lenY):
             #the Wilcoxon rank sum test

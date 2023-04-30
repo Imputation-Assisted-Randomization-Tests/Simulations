@@ -204,6 +204,7 @@ class DataGenerator:
                 for p_3 in range(1,6):
                   sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
 
+            
             M_lamda[i][0] = np.exp(X[i, :]).sum() + sum1 + U[i] + np.exp(Y[i, 0])
 
             M_lamda[i][1] = ((X[i, :]**3).sum() + sum2 + U[i] + (Y[i, 0]**3)/2 + Y[i, 1])
@@ -217,6 +218,16 @@ class DataGenerator:
 
         for i in range(self.N):
             values = np.zeros(3)
+            sum3 = 0
+            for p in range(1,6):
+                sum3 += p * X[i,p-1] 
+
+            sum4 = 0
+            for p in range(1,6):
+              for p_2 in range(1,6):
+                for p_3 in range(1,6):
+                  sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
+
             values[0] =  np.exp(X[i, :]).sum() + sum1 + U[i] + np.exp(Y[i, 0])
             values[1] = ((X[i, :]**3).sum() + sum2 + U[i] + (Y[i, 0]**3)/2 + Y[i, 1])
             values[2] = (sum3 + sum4 + U[i] + Y[i, 0] + np.exp(Y[i, 1]))

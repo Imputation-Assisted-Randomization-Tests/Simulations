@@ -86,16 +86,18 @@ def run(Nsize, Unobserved, Single, filepath):
             os.makedirs("%s/%f"%(filepath,beta_coef))
 
         # Convert lists to numpy arrays
-        p_values_oracle = np.array(p_values_oracle)
         p_values_median = np.array(p_values_median)
         p_values_LR = np.array(p_values_LR)
         p_values_xgboost = np.array(p_values_xgboost)
+        p_values_oracle = np.array(p_values_oracle)
 
         # Save numpy arrays to files
-        np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), p_values_oracle)
         np.save('%s/%f/p_values_median_%d.npy' % (filepath, beta_coef, task_id), p_values_median)
         np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), p_values_LR)
-        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef,task_id), p_values_xgboost)      
+        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef,task_id), p_values_xgboost)     
+        np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), p_values_oracle)
+        
+         
 
 
 
