@@ -92,7 +92,7 @@ class OneShotTest:
         for i in range(n):
             t += sorted_list[i][0] * (i + 1)
         
-        return np.array(t)
+        return t
 
     def getT(self, G, df, indexY, lenY):
         

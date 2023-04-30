@@ -27,7 +27,7 @@ def run(Nsize, Unobserved, Single, filepath ):
         os.makedirs(filepath)
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = 0, beta_12 = 0, beta_21 = 0, beta_22 = 0, beta_23 = 0, beta_31 = 0,beta_32=0, MaskRate=0.5,Unobserved=Unobserved, Single=Single)
+    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = 0, beta_12 = 0, beta_21 = 0, beta_22 = 0, beta_23 = 0, beta_31 = 0,beta_32=0, MaskRate=0.3,Unobserved=Unobserved, Single=Single)
     X, Z, U, Y, M, S = DataGen.GenerateData()
     
     # Oracle 
@@ -100,12 +100,12 @@ if __name__ == '__main__':
 
     if os.path.exists("Result") == False:
         os.mkdir("Result")
-
+    """
     run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_level_unobserved_2000" + "_single")
     run(2000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_level_2000" + "_single")
     run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_level_unobserved_1000" + "_single")
     run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_level_1000" + "_single")
-
+""" 
     run(2000, Unobserved = 1, Single = False, filepath = "Result/HPC_level_unobserved_2000" + "_multi")
     run(2000, Unobserved = 0, Single = False , filepath = "Result/HPC_level_2000" + "_multi")
     run(1000, Unobserved = 1, Single = False , filepath = "Result/HPC_level_unobserved_1000" + "_multi")
