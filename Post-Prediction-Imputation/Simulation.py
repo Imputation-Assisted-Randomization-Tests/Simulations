@@ -186,7 +186,7 @@ class DataGenerator:
                 sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
           sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
           
-          M_lamda[i][0] = (sum3 + sum4 + np.sin(U[i])  + Y[i, 0] + logistic.cdf(Y[i, 0]))
+          M_lamda[i][0] = (sum3 + sum4  + Y[i, 0] + logistic.cdf(Y[i, 0]))
         
         lambda1 = np.percentile(M_lamda, 100 * (1-self.MaskRate))
 
@@ -203,7 +203,7 @@ class DataGenerator:
                 sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
           sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
 
-          if (sum3 + sum4 + np.sin(U[i]) + Y[i, 0] + logistic.cdf(Y[i, 0])) > lambda1:
+          if (sum3 + sum4 + Y[i, 0] + logistic.cdf(Y[i, 0])) > lambda1:
             M[i][0] = 1
 
         return M
