@@ -19,7 +19,7 @@ def main(type):
 
     
 
-#main("single")
-main("multi")
+main("single")
+#main("multi")
 
 
