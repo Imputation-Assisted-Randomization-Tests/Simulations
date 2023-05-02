@@ -147,6 +147,9 @@ class DataGenerator:
 
       # Compute Yn3
       Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5  + sum6 + sum7 + U)
+      print(self.beta_11 * Z.shape, self.beta_12 * Z * sum1.shape,sum2.shape,np.sin(U).shape)
+      print(self.beta_21 * Z.shape, self.beta_22 * Z * X[:,0].shape, self.beta_23 * Z * U.shape, sum3.shape, sum4.shape)
+      print(self.beta_31 * Z.shape, self.beta_32 * Z * sum5.shape, sum6.shape, sum7.shape, U.shape)
 
     else:
       # Calculate Y_n1
@@ -157,6 +160,10 @@ class DataGenerator:
 
       # Compute Yn3
       Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5 + sum6 + sum7) 
+
+      print((self.beta_11 * Z).shape, (self.beta_12 * Z * sum1).shape,sum2.shape)
+      print((self.beta_21 * Z).shape, (self.beta_22 * Z * X[:,0]).shape, sum3.shape, sum4.shape)
+      print((self.beta_31 * Z).shape, (self.beta_32 * Z * sum5).shape, sum6.shape, sum7.shape)
     
     if self.Single:
       Y = Y_n3.reshape(-1, 1)

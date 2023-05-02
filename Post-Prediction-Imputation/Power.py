@@ -32,14 +32,14 @@ def run(Nsize, Unobserved, Single, filepath):
     print("Begin")
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, verbose=1)
+    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, verbose=0)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
     print(X.shape, Z.shape, U.shape, Y.shape)
 
     # Oracle 
-    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y, L=0, G1=None, G2=None,verbose=1)
+    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y, L=0, G1=None, G2=None,verbose=0)
     # Append p-values to corresponding lists
     if Single:
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
@@ -117,9 +117,13 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
+    if os.path.exists("sample") == False:
+        os.mkdir("sample")  
+
     for coef in np.arange(0.1,0.2,0.02):
         beta_coef = coef
         run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_1000" + "_single")
+        exit()
         """
         run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
         run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")
