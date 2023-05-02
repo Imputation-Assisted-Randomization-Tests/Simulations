@@ -38,7 +38,10 @@ class OneShotTest:
 
     def get_corr(self, G, df, indexY, Y,lenY):
         # Get the imputed data Y and indicator Z
-        df_imputed = G.transform(df)
+        if G is None:
+            df_imputed = df.to_numpy()
+        else:
+            df_imputed = G.transform(df)
         y = df_imputed[:, indexY:indexY+lenY]
 
         # Initialize the lists to store imputed and truth values for missing positions
@@ -52,7 +55,8 @@ class OneShotTest:
                 if np.isnan(df.iloc[i, -lenY + j]):
                     y_imputed[j].append(y[i, j])
                     y_truth[j].append(Y[i, j])
-
+        if y_imputed == y_truth:
+            return [1,1,1]
         # Convert the lists to NumPy arrays
         y_imputed = [np.array(arr) for arr in y_imputed]
         y_truth = [np.array(arr) for arr in y_truth]
@@ -310,14 +314,8 @@ class OneShotTest:
         t1_obs = self.getT(G2, df1, Z.shape[1] + X.shape[1], lenY = Y.shape[1])
 
         # get the correlation of G1 and G2
-        if G1 != None:
-            corr_G1 = self.get_corr(G1, df2, Z.shape[1] + X.shape[1],Y[df1.shape[0]:,:], lenY=Y.shape[1])
-        else:
-            corr_G1 = [1,1,1]
-        if G2 != None:
-            corr_G2 = self.get_corr(G2, df1, Z.shape[1] + X.shape[1],Y[0:df1.shape[0],:], lenY=Y.shape[1])
-        else:
-            corr_G2 = [1,1,1]
+        corr_G1 = self.get_corr(G1, df2, Z.shape[1] + X.shape[1],Y[df1.shape[0]:,:], lenY=Y.shape[1])
+        corr_G2 = self.get_corr(G2, df1, Z.shape[1] + X.shape[1],Y[0:df1.shape[0],:], lenY=Y.shape[1])
 
         #print train end
         if verbose:

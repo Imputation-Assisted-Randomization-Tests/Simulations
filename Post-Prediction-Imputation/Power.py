@@ -19,7 +19,7 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 10
-L = 5000
+L = 1000
 
 def run(Nsize, Unobserved, Single, filepath):
 
@@ -33,7 +33,7 @@ def run(Nsize, Unobserved, Single, filepath):
     print("Begin")
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single)
+    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.2,Unobserved=Unobserved, Single=Single)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
