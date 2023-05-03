@@ -40,7 +40,7 @@ def run(Nsize, Unobserved, Single, filepath):
     print(X.shape, Z.shape, U.shape, Y.shape)
 
     # Oracle 
-    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y, L=L, G1=None, G2=None,verbose=0)
+    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y, L=L, G1=None, G2=None,verbose=1)
     # Append p-values to corresponding lists
     if Single:
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
@@ -50,7 +50,7 @@ def run(Nsize, Unobserved, Single, filepath):
     #Median imputer
     median_imputer_1 = SimpleImputer(missing_values=np.nan, strategy='median')
     median_imputer_2 = SimpleImputer(missing_values=np.nan, strategy='median')
-    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y,L=L, G1=median_imputer_1, G2=median_imputer_2,verbose=0)
+    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y,L=L, G1=median_imputer_1, G2=median_imputer_2,verbose=1)
     # Append p-values to corresponding lists
     if Single:
         p_values_median = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
@@ -70,7 +70,7 @@ def run(Nsize, Unobserved, Single, filepath):
     #XGBoost
     XGBoost_1= IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
     XGBoost_2= IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
-    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y,L=L, G1=XGBoost_1, G2=XGBoost_2,verbose=0)
+    p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y,L=L, G1=XGBoost_1, G2=XGBoost_2,verbose=1)
     # Append p-values to corresponding lists
     if Single:
         p_values_xgboost = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
@@ -117,16 +117,17 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
-    for coef in np.arange(0.02,0.2,0.02):
+    for coef in np.arange(0.2,0.5,0.05):
         beta_coef = coef
+        run(2000, Unobserved = 0, Single = False , filepath = "Result/HPC_power_2000" + "_multi")
+        run(1000, Unobserved = 0, Single = False, filepath = "Result/HPC_power_1000" + "_multi") 
+        """
         run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_1000" + "_single")
         run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
         run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")
         run(2000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_2000" + "_single")
-        """run(2000, Unobserved = 1, Single = False, filepath = "Result/HPC_power_unobserved_2000" + "_multi")
-        run(2000, Unobserved = 0, Single = False , filepath = "Result/HPC_power_2000" + "_multi")
-        run(1000, Unobserved = 1, Single = False , filepath = "Result/HPC_power_unobserved_1000" + "_multi")
-        run(1000, Unobserved = 0, Single = False, filepath = "Result/HPC_power_1000" + "_multi")  """
+        """
+ 
       
 
         
