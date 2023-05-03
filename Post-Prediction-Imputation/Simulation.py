@@ -129,7 +129,7 @@ class DataGenerator:
     Y_n2 = (self.beta_21 * Z + self.beta_22 * Z * X[:,0] + sum3 + sum4) 
 
     # Compute Yn3
-    Y_n3 = (self.beta_31 * Z + sum6) 
+    Y_n3 = (self.beta_31 * Z + sum6 + sum7) 
     
     if self.Single:
       Y = Y_n3.reshape(-1, 1)
@@ -152,7 +152,7 @@ class DataGenerator:
           else:
             M[i][0] = 0
         return M
-        
+
       else:
         M = np.zeros((n, 3))
        #make M randomly generated based on self.MaskRate
