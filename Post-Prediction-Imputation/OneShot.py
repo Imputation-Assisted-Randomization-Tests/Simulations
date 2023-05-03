@@ -88,6 +88,7 @@ class OneShotTest:
             my_list.append((z[i],y[i]))
         sorted_list = sorted(my_list, key=lambda x: x[1])
 
+        print(sorted_list)
         #Calculate
         for i in range(n):
             t += sorted_list[i][0] * (i + 1)

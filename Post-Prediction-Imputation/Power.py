@@ -45,7 +45,7 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-    """
+    
     #Median imputer
     median_imputer_1 = SimpleImputer(missing_values=np.nan, strategy='median')
     median_imputer_2 = SimpleImputer(missing_values=np.nan, strategy='median')
@@ -55,7 +55,9 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_median = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_median = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-   
+    
+    exit()
+    
     #LR imputer
     BayesianRidge_1 = IterativeImputer(estimator = linear_model.BayesianRidge(),max_iter=max_iter)
     BayesianRidge_2 = IterativeImputer(estimator = linear_model.BayesianRidge(),max_iter=max_iter)
@@ -65,7 +67,6 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_LR = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_LR = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-        """
    
     #XGBoost
     XGBoost_1= IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
@@ -77,7 +78,7 @@ def run(Nsize, Unobserved, Single, filepath):
     else:
         p_values_xgboost = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
     print("Finished")
-    exit()
+    
     #Save the file in numpy format
     if(save_file):
 
