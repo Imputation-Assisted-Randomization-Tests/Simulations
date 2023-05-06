@@ -1096,3 +1096,67 @@ Mean p-values for Oracle:
  1.         1.         0.53      ]
 
 
+beta: 0.02
+Analysis of : Result/HPC_power_unobserved_1000_single/0.020000
+beta: 0.02
+Analysis of : Result/HPC_power_unobserved_1000_single/0.020000
+Mean p-values for Median Imputer:
+[ 1.00000000e+00  1.00000000e+00  1.00000000e+00  1.00000000e+00
+  4.71485570e-01  4.63050656e-01 -3.44403864e-18 -1.17632100e-18
+  6.45812311e-02]
+Mean p-values for LR Imputer:
+[ 1.          1.          1.          1.          0.46740141  0.45808254
+ -0.54937464 -0.56663728  0.06659939]
+Mean p-values for XGBoost Imputer:
+[1.         1.         1.         1.         0.47911282 0.46056327
+ 0.1928401  0.19280359 0.06155399]
+Mean p-values for Oracle:
+[1.         1.         1.         1.         0.46610474 0.45430212
+ 1.         1.         0.0716448 ]
+
+Analysis of : Result/HPC_power_1000_single/0.020000
+Mean p-values for Median Imputer:
+[1.00000000e+00 1.00000000e+00 1.00000000e+00 1.00000000e+00
+ 3.44054087e-01 3.53616347e-01 6.80342545e-19 1.49056262e-18
+ 1.53380424e-01]
+Mean p-values for LR Imputer:
+[ 1.          1.          1.          1.          0.34484823  0.35269748
+ -0.33972014 -0.33514571  0.16448032]
+Mean p-values for XGBoost Imputer:
+[1.         1.         1.         1.         0.35294067 0.36172916
+ 0.53537217 0.53877763 0.15943491]
+Mean p-values for Oracle:
+[1.         1.         1.         1.         0.33657074 0.34483269
+ 1.         1.         0.17961655]
+
+Analysis of : Result/HPC_power_unobserved_2000_single/0.020000
+Mean p-values for Median Imputer:
+[ 1.00000000e+00  1.00000000e+00  1.00000000e+00  1.00000000e+00
+  4.53155600e-01  4.53239556e-01 -1.01869904e-18 -8.17299036e-19
+  7.66902119e-02]
+Mean p-values for LR Imputer:
+[ 1.          1.          1.          1.          0.44595338  0.44305348
+ -0.62442656 -0.61881707  0.07467205]
+Mean p-values for XGBoost Imputer:
+[1.         1.         1.         1.         0.4629449  0.4562664
+ 0.21048897 0.21418288 0.06458123]
+Mean p-values for Oracle:
+[1.         1.         1.         1.         0.44394329 0.43875338
+ 1.         1.         0.08476287]
+
+Analysis of : Result/HPC_power_2000_single/0.020000
+Mean p-values for Median Imputer:
+[ 1.00000000e+00  1.00000000e+00  1.00000000e+00  1.00000000e+00
+  2.86745913e-01  2.84292028e-01 -1.35302355e-18  2.32945377e-18
+  2.26034309e-01]
+Mean p-values for LR Imputer:
+[ 1.          1.          1.          1.          0.28688819  0.27978769
+ -0.39734416 -0.3978615   0.22906155]
+Mean p-values for XGBoost Imputer:
+[1.         1.         1.         1.         0.2939227  0.2931669
+ 0.58196725 0.58070063 0.21594349]
+Mean p-values for Oracle:
+[1.         1.         1.         1.         0.2758777  0.27822603
+ 1.         1.         0.24117053]
+
+Analysis of : Result/HPC_power_unobserved_2000_multi/0.020000

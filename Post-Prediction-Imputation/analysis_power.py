@@ -114,5 +114,5 @@ def main():
             read_and_print_npz_files("Result/HPC_power_1000_multi/%f" % coef, file)
             file.write("\n\n")
 
-main()
+#main()
 
