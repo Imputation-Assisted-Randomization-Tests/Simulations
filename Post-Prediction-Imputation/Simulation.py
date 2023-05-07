@@ -146,7 +146,7 @@ class DataGenerator:
       Y_n2 = (self.beta_21 * Z + self.beta_22 * Z * X[:,0] + self.beta_23 * Z * U + sum3 + sum4) 
 
       # Compute Yn3
-      Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5  + sum6 + sum7 + U)
+      Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5  + sum6 + U)
 
     else:
       # Calculate Y_n1
@@ -156,7 +156,7 @@ class DataGenerator:
       Y_n2 = (self.beta_21 * Z + self.beta_22 * Z * X[:,0] + sum3 + sum4) 
 
       # Compute Yn3
-      Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5 + sum6 + sum7) 
+      Y_n3 = (self.beta_31 * Z + self.beta_32 * Z * sum5 + sum6 ) 
     
     if self.Single:
       Y = Y_n3.reshape(-1, 1)
