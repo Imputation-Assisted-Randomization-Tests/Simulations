@@ -8,7 +8,7 @@ def main(type):
     data = []
     data_with_U = []
 
-    for coef in np.arange(0.02, 0.2, 0.02):
+    for coef in np.arange(0.01,0.3,0.03):
         row = [coef]
         row_with_U = [coef]
         for directory in ["Result/HPC_power_1000_%s/%f" % (type,coef),
@@ -34,7 +34,7 @@ def plot(data, data_with_U):
     plot_types.plot_results(data, data_with_U)
     plot_unobserved.plot_results(data, data_with_U)
 
-#main("single")
-main("multi")
+main("single")
+#main("multi")
 
 
