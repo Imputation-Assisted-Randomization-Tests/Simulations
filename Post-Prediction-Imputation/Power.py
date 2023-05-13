@@ -39,6 +39,7 @@ def run(Nsize, Unobserved, Single, filepath):
 
     print(X.shape, Z.shape, U.shape, Y.shape)
 
+    """
     # Oracle 
     p11, p12, p21, p22, p31, p32, corr1, corr2, reject = Framework.one_shot_test(Z, X, M, Y, L=L, G1=None, G2=None,verbose=0)
     # Append p-values to corresponding lists
@@ -46,7 +47,9 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_oracle = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-    
+    """
+
+    """
     #Median imputer
     median_imputer_1 = SimpleImputer(missing_values=np.nan, strategy='median')
     median_imputer_2 = SimpleImputer(missing_values=np.nan, strategy='median')
@@ -56,7 +59,7 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_median = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_median = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-
+"""
     #LR imputer
     BayesianRidge_1 = IterativeImputer(estimator = linear_model.BayesianRidge(),max_iter=max_iter)
     BayesianRidge_2 = IterativeImputer(estimator = linear_model.BayesianRidge(),max_iter=max_iter)
@@ -66,7 +69,7 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_LR = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_LR = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-        
+        """
     #XGBoost
     XGBoost_1= IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
     XGBoost_2= IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
@@ -76,8 +79,7 @@ def run(Nsize, Unobserved, Single, filepath):
         p_values_xgboost = [ p11, p12, p21, p22, p31, p32, corr1[0], corr2[0],reject ]
     else:
         p_values_xgboost = [ p11, p12, p21, p22, p31, p32, corr1[2], corr2[2],reject ]
-    print("Finished")
-
+    """
     #Save the file in numpy format
     if(save_file):
 
@@ -119,14 +121,15 @@ if __name__ == '__main__':
 
     for coef in np.arange(0.01,0.3,0.02):
         beta_coef = coef
-        run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_1000" + "_single")
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")
-        run(2000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_2000" + "_single")
-        run(2000, Unobserved = 1, Single = False, filepath = "Result/HPC_power_unobserved_2000" + "_multi")
-        run(2000, Unobserved = 0, Single = False , filepath = "Result/HPC_power_2000" + "_multi")
-        run(1000, Unobserved = 1, Single = False , filepath = "Result/HPC_power_unobserved_1000" + "_multi")
-        run(1000, Unobserved = 0, Single = False, filepath = "Result/HPC_power_1000" + "_multi")  
+        run(1000, Unobserved = 0, Single = 0 , filepath = "Result/HPC_power_1000" + "_single")
+        exit()
+        #run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
+        #run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")
+        #run(2000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_2000" + "_single")
+        #run(2000, Unobserved = 1, Single = False, filepath = "Result/HPC_power_unobserved_2000" + "_multi")
+        #run(2000, Unobserved = 0, Single = False , filepath = "Result/HPC_power_2000" + "_multi")
+        #run(1000, Unobserved = 1, Single = False , filepath = "Result/HPC_power_unobserved_1000" + "_multi")
+        #run(1000, Unobserved = 0, Single = False, filepath = "Result/HPC_power_1000" + "_multi")  
 
         
 

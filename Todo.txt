@@ -24,3 +24,7 @@ U1,U2 -> norm U (0,sigma)
 
 missing - 0.5
 nmlti spilt 
+
+
+
+- U
