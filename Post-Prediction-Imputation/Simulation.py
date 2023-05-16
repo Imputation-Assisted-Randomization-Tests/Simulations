@@ -142,7 +142,7 @@ class DataGenerator:
       Y_n1 = (self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 + np.sin(U) )
 
       # Compute Yn2
-      Y_n3 = self.beta_21 * Z + self.beta_22 * Z * X[:,0] + self.beta_23 * Z * U + sum3 + sum4
+      Y_n3 = self.beta_21 * Z + self.beta_22 * Z * X[:,0] + self.beta_23 * Z * U + sum3 #+ sum4
 
       # Compute Yn3
       Y_n2 = (self.beta_31 * Z + self.beta_32 * Z * sum5  + sum6 + sum7 + U)
@@ -152,7 +152,7 @@ class DataGenerator:
       Y_n1 = (self.beta_11 * Z + self.beta_12 * Z * sum1  + sum2) 
 
       # Compute Yn2
-      Y_n3 = self.beta_21 * Z + self.beta_22 * Z * X[:,0] + sum3 + sum4
+      Y_n3 = self.beta_21 * Z + self.beta_22 * Z * X[:,0] + sum3 #+ sum4
 
       # Compute Yn3
       Y_n2 = (self.beta_31 * Z + self.beta_32 * Z * sum5 + sum6 + sum7) 
