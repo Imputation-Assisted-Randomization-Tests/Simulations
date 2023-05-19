@@ -15,10 +15,12 @@ import os
 #from cuml import XGBRegressor
  #   XGBRegressor(tree_method='gpu_hist')
 
-beta_coef = None
+beta_coef = 0.15
 task_id = 1
 save_file = False
 max_iter = 3
+U_std = None
+
 L = 100
 
 def run(Nsize, Unobserved, Single, filepath):
@@ -33,7 +35,7 @@ def run(Nsize, Unobserved, Single, filepath):
     print("Begin")
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single)
+    DataGen = Generator.DataGenerator(N = Nsize, N_T = int(Nsize / 2), N_S = int(Nsize / 20), beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, U_std=U_std)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
@@ -69,9 +71,9 @@ def run(Nsize, Unobserved, Single, filepath):
     #Save the file in numpy format
     if(save_file):
 
-        if not os.path.exists("%s/%f"%(filepath,beta_coef)):
+        if not os.path.exists("%s/%f"%(filepath,U_std)):
             # If the folder does not exist, create it
-            os.makedirs("%s/%f"%(filepath,beta_coef))
+            os.makedirs("%s/%f"%(filepath,U_std))
 
         # Convert lists to numpy arrays
         values_oracle = np.array(values_oracle)
@@ -80,10 +82,10 @@ def run(Nsize, Unobserved, Single, filepath):
         values_xgboost = np.array(values_xgboost)
 
         # Save numpy arrays to files
-        np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), values_oracle)
-        np.save('%s/%f/p_values_median_%d.npy' % (filepath, beta_coef, task_id), values_median)
-        np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), values_LR)
-        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef,task_id), values_xgboost)      
+        np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, U_std, task_id), values_oracle)
+        np.save('%s/%f/p_values_median_%d.npy' % (filepath, U_std, task_id), values_median)
+        np.save('%s/%f/p_values_LR_%d.npy' % (filepath, U_std,task_id), values_LR)
+        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, U_std,task_id), values_xgboost)      
 
 if __name__ == '__main__':
     multiprocessing.freeze_support() # This is necessary and important, not sure why 
@@ -102,8 +104,8 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
-    for coef in np.arange(0.01,0.5,0.05):
-        beta_coef = coef
+    for coef in np.arange(0,10,1):
+        U_std = coef
         run(1000, Unobserved = 0, Single = 1 , filepath = "Result/HPC_power_1000" + "_single")
         run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_1000" + "_single")
         run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_unobserved_2000" + "_single")

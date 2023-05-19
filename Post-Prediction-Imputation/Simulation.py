@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.stats import logistic
 
 class DataGenerator:
-  def __init__(self,*, N = 1000, N_T = 500, N_S = 50, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, verbose = False):
+  def __init__(self,*, N = 1000, N_T = 500, N_S = 50, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, verbose = False, U_std = 1):
     self.N = N
     self.N_T = N_T
     self.N_S = N_S
@@ -19,6 +19,7 @@ class DataGenerator:
     self.Unobserved = Unobserved
     self.Single = Single
     self.verbose = verbose
+    self.U_std = U_std
 
   def GenerateX(self):
       # generate Xn1 and Xn2
@@ -45,7 +46,7 @@ class DataGenerator:
   def GenerateU(self):
       # generate U
       mean = 0
-      std = 1
+      std = self.U_std
       U = np.random.normal(mean, std, self.N)
       U = U.reshape(-1, 1)
 
