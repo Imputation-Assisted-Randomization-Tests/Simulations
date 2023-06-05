@@ -4,7 +4,7 @@ import pandas as pd
 from scipy.stats import logistic
 
 class DataGenerator:
-  def __init__(self,*, N = 1000, N_T = 500, N_S = 50, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, verbose = False):
+  def __init__(self,*, N = 1000, N_T = 500, N_S = 50, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, verbose = False, M_Direction = 'up'):
     self.N = N
     self.N_T = N_T
     self.N_S = N_S
@@ -19,6 +19,7 @@ class DataGenerator:
     self.Unobserved = Unobserved
     self.Single = Single
     self.verbose = verbose
+    self.M_Direction = M_Direction
 
   def GenerateX(self):
       # generate Xn1 and Xn2
@@ -144,7 +145,9 @@ class DataGenerator:
 
       data = pd.DataFrame({'Y_n1_Z': Y_n1_Z, 'Y_n1_X': Y_n1_X, 'Y_n1_U': Y_n1_U, 'Y_n2_Z': Y_n2_Z, 'Y_n2_X': Y_n2_X, 'Y_n2_U': Y_n2_U, 'Y_n3_Z': Y_n3_Z, 'Y_n3_X': Y_n3_X, 'Y_n3_U': Y_n3_U})
       print(data.describe())
+
     
+    print(self.beta_11, self.beta_12, self.beta_21, self.beta_22, self.beta_31, self.beta_32)
     if self.Unobserved:
       # Calculate Y_n1
       Y_n1 = (self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 + np.sin(U) )
@@ -315,9 +318,14 @@ class DataGenerator:
             values[1] = (1.0  / np.sqrt(5))*((X[i, :]**3).sum() + sum2 + -1 * Y[i, 0] + -1 * Y[i, 1])
             values[2] = (sum3 + sum4 + -1 * Y[i, 0] + -1 * logistic.cdf(Y[i, 1]) + -1 * np.absolute(Y[i, 2]))
 
-            M[i][0] = (values[0] > lambda1)
-            M[i][1] =  (values[1] > lambda2)
-            M[i][2] =  (values[2] > lambda3)
+            if self.M_Direction == 'up':
+              M[i][0] = (values[0] > lambda1)
+              M[i][1] =  (values[1] > lambda2)
+              M[i][2] =  (values[2] > lambda3)
+            else:
+              M[i][0] = (values[0] < lambda1)
+              M[i][1] =  (values[1] < lambda2)
+              M[i][2] =  (values[2] < lambda3)
 
         return M
   
