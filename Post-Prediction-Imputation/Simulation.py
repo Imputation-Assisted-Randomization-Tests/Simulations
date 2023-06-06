@@ -213,7 +213,7 @@ class DataGenerator:
                 sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
           sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
 
-          if (sum3 + sum4  + Y[i, 0] + logistic.cdf(Y[i, 0]) + np.absolute(Y[i, 0]) + np.sin(U[i])) < lambda1:
+          if (sum3 + sum4  + Y[i, 0] + logistic.cdf(Y[i, 0]) + np.absolute(Y[i, 0]) + np.sin(U[i])) > lambda1:
             M[i][0] = 1
 
         return M
