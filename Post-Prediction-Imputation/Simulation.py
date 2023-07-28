@@ -54,21 +54,22 @@ class DataGenerator:
 
   def GenerateS(self):
     # Add strata index
-    groupSize = int(self.N / self.N_S)
+    groupSize = 10
     S = np.zeros(self.N)
-    for i in range(self.N_S):
+    for i in range(100):
         S[groupSize*i:groupSize*(i+1)] = i + 1
     S = S.reshape(-1, 1)
     return S
 
   def GenerateZ(self):
     Z = []
-    groupSize = int(self.N / self.N_S)
+    groupSize = 10
 
-    for i in range(self.N_S):
+    for i in range(100):
         Z.append(np.random.binomial(1, 0.5, groupSize))
 
     Z = np.concatenate(Z).reshape(-1, 1)
+    print(Z)
     return Z
 
   def GenerateIndividualEps(self):
@@ -81,9 +82,9 @@ class DataGenerator:
   
   def GenerateStrataEps(self):
       eps = []
-      groupSize = int(self.N / self.N_S)
+      groupSize = 10
 
-      for i in range(self.N_S):
+      for i in range(100):
           eps.append(np.full(groupSize, np.random.normal(0, 0.1)))
 
       eps = np.concatenate(eps).reshape(-1,)
@@ -91,9 +92,9 @@ class DataGenerator:
   
   def GenerateXInter(self, X):
       biases = []
-      groupSize = int(self.N / self.N_S)
+      groupSize = 10
 
-      for i in range(self.N_S):
+      for i in range(100):
           strata = X[i * groupSize : (i+1) * groupSize, 0]  # select the first column in the strata
           biases.append(np.full(groupSize, np.mean(strata)))
 
@@ -102,9 +103,9 @@ class DataGenerator:
 
   def GenerateYInter(self, Y):
       biases = []
-      groupSize = int(self.N / self.N_S)
+      groupSize = 10
 
-      for i in range(self.N_S):
+      for i in range(100):
           strata = Y[i * groupSize : (i+1) * groupSize, 0]  # select the first column in the strata
           biases.append(np.full(groupSize,1/2 * np.mean(strata)))
 
