@@ -11,6 +11,7 @@ import Retrain
 import warnings
 import xgboost as xgb
 import os
+import lightgbm as lgb
 
 #from cuml import XGBRegressor
  #   XGBRegressor(tree_method='gpu_hist')
@@ -19,7 +20,7 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 2000
+L = 100
 
 def run(Nsize, Unobserved, Single, filepath, adjust, linear_method):
 
@@ -59,10 +60,10 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method):
     # Append p-values to corresponding lists
     values_LR = [ *p_values, reject, corr_G]
 
-    #XGBoost
-    print("XGBoost")
-    XGBoost = IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=max_iter)
-    p_values, reject, corr_G = Framework.retrain_test(Z, X, M, Y, L=L, G=XGBoost,verbose=1)
+    #LightGBM
+    print("LightGBM")
+    LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1), max_iter=max_iter)
+    p_values, reject, corr_G = Framework.retrain_test(Z, X, M, Y, L=L, G=LightGBM,verbose=1)
     # Append p-values to corresponding lists
     values_xgboost = [ *p_values, reject, corr_G]
     print("Finished")
@@ -103,15 +104,14 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
     
+    for coef in np.arange(0.0,0.05,0.05):
+        beta_coef = coef
+        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2)
+
+"""
     for coef in np.arange(0.0,5,1):
         beta_coef = coef
         run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2)
-
-    for coef in np.arange(0.0,0.25,0.05):
-        beta_coef = coef
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2)
-
-"""
 
     for coef in np.arange(0,3,0.6):
         beta_coef = coef

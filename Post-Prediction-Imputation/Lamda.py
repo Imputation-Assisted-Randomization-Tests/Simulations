@@ -68,7 +68,7 @@ if __name__ == '__main__':
     
     while(1):
         for coef in np.arange(0.0,0.25,0.05):
-            beta_coef = 0.2
+            beta_coef = 4
             run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2)
 
 
