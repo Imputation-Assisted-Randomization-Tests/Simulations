@@ -1,0 +1,25 @@
+Analysis of : Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX_single/0.000000
+Mean p-values for Median Imputer:
+[0.498582 0.201    0.      ]
+Mean p-values for LR Imputer:
+[0.50333 0.203   0.     ]
+Mean p-values for LightGBM Imputer:
+[0.504488 0.2      0.      ]
+
+Plotting the distribution of the first 6 p-values for each imputer
+Median Imputer
+KstestResult(statistic=0.019000000000000017, pvalue=0.8562402488311239, statistic_location=0.746, statistic_sign=-1)
+Proportion of p-values below 0.05: 0.0590
+Proportion of p-values below 0.1: 0.1060
+Proportion of p-values below 0.2: 0.2000
+LR Imputer
+KstestResult(statistic=0.02400000000000002, pvalue=0.6034104769550357, statistic_location=0.752, statistic_sign=-1)
+Proportion of p-values below 0.05: 0.0480
+Proportion of p-values below 0.1: 0.0960
+Proportion of p-values below 0.2: 0.1980
+LightGBM Imputer
+KstestResult(statistic=0.023999999999999966, pvalue=0.6034104769550386, statistic_location=0.482, statistic_sign=-1)
+Proportion of p-values below 0.05: 0.0550
+Proportion of p-values below 0.1: 0.1050
+Proportion of p-values below 0.2: 0.1990
+

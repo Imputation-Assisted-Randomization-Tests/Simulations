@@ -83,7 +83,7 @@ def plot_p_values_distribution(p_values, imputer_name, file):
     p_values = np.array(p_values)
     fig, axs = plt.subplots(1, 6, figsize=(12, 4), tight_layout=True)
 
-    for i in range(0, 6):
+    for i in range(0, 1):
         axs[i].hist(p_values[:, i])
         axs[i].set_title(f"p-value {i + 1}")
         file.write(str(scipy.stats.kstest(p_values[:, i], 'uniform')) + "\n")
@@ -100,12 +100,5 @@ def plot_p_values_distribution(p_values, imputer_name, file):
     # plt.show()
 
 with open("level.result", "w") as file:
-    read_and_print_npz_files('Result/HPC_level_unobserved_1000_multi', file)
-    read_and_print_npz_files('Result/HPC_level_1000_multi', file)
-    read_and_print_npz_files('Result/HPC_level_unobserved_2000_multi', file)
-    read_and_print_npz_files('Result/HPC_level_2000_multi', file)
-    read_and_print_npz_files('Result/HPC_level_unobserved_1000_single', file)
-    read_and_print_npz_files('Result/HPC_level_1000_single', file)
-    read_and_print_npz_files('Result/HPC_level_unobserved_2000_single', file)
-    read_and_print_npz_files('Result/HPC_level_2000_single', file)
-
+    read_and_print_npz_files('Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX_single/0.000000', file)
+   
