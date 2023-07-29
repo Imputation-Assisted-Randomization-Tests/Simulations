@@ -221,7 +221,7 @@ class DataGenerator:
           sum2 =  (1.0  / np.sqrt(5)) * sum2
 
 
-        M_lamda[i][0] = sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + U[i] + XInter[i] + YInter[i]
+          M_lamda[i][0] = sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) #+ U[i] + XInter[i] + YInter[i]
 
         lambda1 = np.percentile(M_lamda, 100 * (1-self.MaskRate)) #self.Missing_lambda #
 
