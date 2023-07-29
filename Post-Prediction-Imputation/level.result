@@ -1,24 +1,24 @@
 Analysis of : Result/HPC_power_1000_unobserved_interference_single/0.000000
 Mean p-values for Median Imputer:
-Power: [0.492875   0.046      4.22865435]
+Power: [0.493876   0.206      4.22267527]
 Mean p-values for LR Imputer:
-Power: [ 0.494978    0.063      24.60250471]
+Power: [ 0.491752    0.218      24.57642988]
 Mean p-values for lightGBM Imputer:
-Power: [4.89887000e-01 9.30000000e-02 6.10972867e+02]
+Power: [4.93478000e-01 2.30000000e-01 6.09944966e+02]
 Plotting the distribution of the first 6 p-values for each imputer
 Median Imputer
-KstestResult(statistic=0.17000000000000004, pvalue=9.796456902723242e-26, statistic_location=0.712, statistic_sign=1)
-Proportion of p-values below 0.05: 0.0010
-Proportion of p-values below 0.1: 0.0050
-Proportion of p-values below 0.2: 0.0460
+KstestResult(statistic=0.03699999999999998, pvalue=0.12618565918998592, statistic_location=0.313, statistic_sign=1)
+Proportion of p-values below 0.05: 0.0500
+Proportion of p-values below 0.1: 0.1110
+Proportion of p-values below 0.2: 0.2060
 LR Imputer
-KstestResult(statistic=0.16800000000000004, pvalue=3.8576562163014396e-25, statistic_location=0.75, statistic_sign=1)
-Proportion of p-values below 0.05: 0.0010
-Proportion of p-values below 0.1: 0.0100
-Proportion of p-values below 0.2: 0.0630
+KstestResult(statistic=0.034999999999999976, pvalue=0.16848479713738784, statistic_location=0.389, statistic_sign=1)
+Proportion of p-values below 0.05: 0.0590
+Proportion of p-values below 0.1: 0.1110
+Proportion of p-values below 0.2: 0.2160
 LightGBM Imputer
-KstestResult(statistic=0.139, pvalue=2.5674392553237043e-17, statistic_location=0.74, statistic_sign=1)
-Proportion of p-values below 0.05: 0.0010
-Proportion of p-values below 0.1: 0.0220
-Proportion of p-values below 0.2: 0.0910
+KstestResult(statistic=0.033999999999999975, pvalue=0.1934941751364564, statistic_location=0.266, statistic_sign=1)
+Proportion of p-values below 0.05: 0.0480
+Proportion of p-values below 0.1: 0.1190
+Proportion of p-values below 0.2: 0.2280
 
