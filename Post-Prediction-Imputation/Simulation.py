@@ -2,12 +2,10 @@ import numpy as np
 from mv_laplace import MvLaplaceSampler
 import pandas as pd
 from scipy.stats import logistic
-
+from random import sample
 class DataGenerator:
-  def __init__(self,*, N = 1000, N_T = 500, N_S = 10, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, linear_method = 0, verbose = False, bias = False):
+  def __init__(self,*, N = 1000,  beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, linear_method = 0, verbose = False, bias = False,lam):
     self.N = N
-    self.N_T = N_T
-    self.N_S = N_S
     self.beta_11 = beta_11
     self.beta_12 = beta_12
     self.beta_21 = beta_21
@@ -21,6 +19,7 @@ class DataGenerator:
     self.verbose = verbose
     self.bias = bias
     self.linear_method = linear_method
+    self.lam = lam
 
   def GenerateX(self):
       # generate Xn1 and Xn2
@@ -56,20 +55,18 @@ class DataGenerator:
     # Add strata index
     groupSize = 10
     S = np.zeros(self.N)
-    for i in range(100):
+    for i in range(int(self.N/10)):
         S[groupSize*i:groupSize*(i+1)] = i + 1
     S = S.reshape(-1, 1)
     return S
 
   def GenerateZ(self):
     Z = []
-    groupSize = 10
+    strata = [0,0,0,0,0,1,1,1,1,1]
+    for i in range(int(self.N/10)):
+        Z.extend(sample(strata, len(strata)))  # sample returns a shuffled list
 
-    for i in range(100):
-        Z.append(np.random.binomial(1, 0.5, groupSize))
-
-    Z = np.concatenate(Z).reshape(-1, 1)
-    print(Z)
+    Z = np.array(Z).reshape(-1, 1)
     return Z
 
   def GenerateIndividualEps(self):
@@ -84,7 +81,7 @@ class DataGenerator:
       eps = []
       groupSize = 10
 
-      for i in range(100):
+      for i in range(int(self.N/10)):
           eps.append(np.full(groupSize, np.random.normal(0, 0.1)))
 
       eps = np.concatenate(eps).reshape(-1,)
@@ -94,7 +91,7 @@ class DataGenerator:
       biases = []
       groupSize = 10
 
-      for i in range(100):
+      for i in range(int(self.N/10)):
           strata = X[i * groupSize : (i+1) * groupSize, 0]  # select the first column in the strata
           biases.append(np.full(groupSize, np.mean(strata)))
 
@@ -105,7 +102,7 @@ class DataGenerator:
       biases = []
       groupSize = 10
 
-      for i in range(100):
+      for i in range(int(self.N/10)):
           strata = Y[i * groupSize : (i+1) * groupSize, 0]  # select the first column in the strata
           biases.append(np.full(groupSize,1/2 * np.mean(strata)))
 
@@ -250,9 +247,7 @@ class DataGenerator:
             if self.linear_method == 2:
               M_lamda[i][0] = sum3 + sum2 + 10 * logistic.cdf(Y[i, 0]) + XInter[i] + YInter[i]
 
-        lambda1 = np.percentile(M_lamda, 100 * (1-self.MaskRate))
-
-
+        lambda1 = self.lam #np.percentile(M_lamda, 100 * (1-self.MaskRate))
 
         for i in range(n):
           sum3 = 0
