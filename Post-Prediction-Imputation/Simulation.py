@@ -86,7 +86,6 @@ class DataGenerator:
           f"beta_23= {self.beta_23}", 
           f"beta_31= {self.beta_31}", 
           f"beta_32= {self.beta_32}")
-    exit()
 
     return Z
 
