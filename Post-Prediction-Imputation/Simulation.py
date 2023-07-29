@@ -188,8 +188,8 @@ class DataGenerator:
     Z = Z.reshape(-1,)
 
 
-    Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4 +  StrataEps+ IndividualEps 
-      
+    Y_n3 = self.beta_32 * Z + sum3 + sum4 #+  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4# +  StrataEps+ IndividualEps 
+    print(Y_n3)
     Y = Y_n3.reshape(-1, 1)
 
     return Y
