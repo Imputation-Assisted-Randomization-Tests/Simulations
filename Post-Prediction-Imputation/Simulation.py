@@ -75,6 +75,19 @@ class DataGenerator:
         Z.append(strata)
     Z = np.concatenate(Z).reshape(-1, 1) 
 
+
+    print(f"N= {self.N}", 
+          f"beta_11= {self.beta_11}", 
+          f"beta_12= {self.beta_12}", 
+          f"beta_21= {self.beta_21}", 
+          f"strata_size= {self.strata_size}", 
+          f"totalStrataNumber= {self.totalStrataNumber}", 
+          f"beta_22= {self.beta_22}", 
+          f"beta_23= {self.beta_23}", 
+          f"beta_31= {self.beta_31}", 
+          f"beta_32= {self.beta_32}")
+    exit()
+
     return Z
 
 
