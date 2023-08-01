@@ -27,13 +27,13 @@ def plot_results1(data, title):
     plt.show()
 
 def plot_results(data, title):
-    columns = ['beta', 'Imputer_Median', 'Imputer_Linear',  'Imputer_LightGBM', 'Imputer_xgboost', 'Imputer_Oracle']
+    columns = ['beta', 'Imputer_Median', 'Imputer_Linear',  'Imputer_LightGBM', 'Imputer_Oracle']
 
     df = pd.DataFrame(data, columns=columns)
 
     plt.figure(figsize=(10, 6))
 
-    colors = {'Median': 'blue', 'Linear': 'red', 'LightGBM': 'orange', 'xgboost': 'green', 'Oracle':'purple'}
+    colors = {'Median': 'blue', 'Linear': 'red', 'LightGBM': 'orange',  'Oracle':'purple'}
     linestyles = {'Imputer': '-'}
 
     for col in columns[1:]:
@@ -57,7 +57,7 @@ def plot(range,dir,title):
         print("Result/%s/%f" % (dir,coef))
         for directory in ["Result/%s/%f" % (dir,coef)]:
             results = read_npz_files(directory)
-            row_power.extend([results['median_power'], results['lr_power'], results['lightGBM_power'], results['xgboost_power'],results['oracle_power']])
+            row_power.extend([results['median_power'], results['lr_power'], results['lightGBM_power'],results['oracle_power']])
         data.append(row_power)
     print(data)
     plot_results(data,title) 
@@ -65,26 +65,16 @@ def plot(range,dir,title):
 
 def main():
 
-    plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference" + "_single","L-100,Size-1000,single_interference_setting,U")
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_interference" + "_single","L-100,Size-50,single_interference_setting,U")
+    plot(np.arange(0,1.5,0.3),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, linearZ_linearX, U")
 
-    exit()
-    #plot(np.arange(0.0,3.1,0.5),"HPC_power_50_linearZ_linearX" + "_single","Size-50, linearZ_linearX, No U")
-    plot(np.arange(0.0,3.1,0.5),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, linearZ_linearX, U")
+    plot(np.arange(0.0,0.4,0.08),"HPC_power_1000_unobserved_linearZ_linearX" + "_single","Size-1000, linearZ_linearX, U")
 
-    #plot(np.arange(0.0,0.41,0.08),"HPC_power_2000_linearZ_linearX" + "_single","Size-2000, linearZ_linearX, No U")
-    plot(np.arange(0.0,0.41,0.08),"HPC_power_2000_unobserved_linearZ_linearX" + "_single","Size-2000, linearZ_linearX, U")
+    plot(np.arange(0.0,5,1),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, linearZ_nonlinearX, U")
 
-    #plot(np.arange(0.0,10.1,2),"HPC_power_50_linearZ_nonlinearX" + "_single","Size-50, linearZ_nonlinearX, No U")
-    plot(np.arange(0.0,10.1,2),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, linearZ_nonlinearX, U")
+    plot(np.arange(0.0,0.80,0.16),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, linearZ_nonlinearX, U")
 
-    #plot(np.arange(0.0,0.81,0.15),"HPC_power_2000_linearZ_nonlinearX" + "_single","Size-2000, linearZ_nonlinearX, No U")
-    plot(np.arange(0.0,0.81,0.15),"HPC_power_2000_unobserved_linearZ_nonlinearX" + "_single","Size-2000, linearZ_nonlinearX, U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, nonlinearZ_nonlinearX, U")
 
-    #plot(np.arange(0.0,6.1,1),"HPC_power_50_nonlinearZ_nonlinearX" + "_single","Size-50, nonlinearZ_nonlinearX, No U")
-    plot(np.arange(0.0,6.1,1),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, nonlinearZ_nonlinearX, U")
-
-    #plot(np.arange(0.0,0.31,0.06),"HPC_power_2000_nonlinearZ_nonlinearX" + "_single","Size-2000, nonlinearZ_nonlinearX, No U")
-    plot(np.arange(0.0,0.31,0.06),"HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-2000, nonlinearZ_nonlinearX, U")
+    plot(np.arange(0.0,0.3 ,0.05),"HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-1000, nonlinearZ_nonlinearX, U")
 
 main()

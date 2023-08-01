@@ -5,10 +5,9 @@ def read_npz_files(directory):
     summed_p_values_median = None
     summed_p_values_LR = None
     summed_p_values_lightGBM = None
-    summed_p_values_xgboost = None
     summed_p_values_oracle = None
 
-    N = int(len(os.listdir(directory)) / 5)
+    N = int(len(os.listdir(directory)) / 4)
 
     for filename in os.listdir(directory):
         if filename.endswith(".npy"):
@@ -48,8 +47,6 @@ def read_npz_files(directory):
         'lr_corr': summed_p_values_LR[2] / N,
         'lightGBM_power': summed_p_values_lightGBM[1] / N,
         'lightGBM_corr': summed_p_values_lightGBM[2] / N,
-        'xgboost_power': summed_p_values_xgboost[1] / N,
-        'xgboost_corr': summed_p_values_xgboost[2] / N,
         'oracle_power': summed_p_values_oracle[1] / N,
         'oracle_corr': summed_p_values_oracle[2] / N,
     }
