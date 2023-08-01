@@ -110,7 +110,7 @@ if __name__ == '__main__':
 
     for coef in np.arange(0,1.5,0.3):
         beta_coef = coef
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
+        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
     for coef in np.arange(0.0,0.4,0.08):
         beta_coef = coef
         run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
