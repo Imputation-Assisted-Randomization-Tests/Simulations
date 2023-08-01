@@ -18,7 +18,7 @@ max_iter = 3
 L = 100
 S_size = 10
 
-def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, Missing_lambda,strata_size, verbose=1):
+def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size, Missing_lambda = None,verbose=1):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -46,7 +46,7 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, Missing_lamb
                     'U': U_flat, 'Y': Y_flat,  'M': M_flat,'Z': Z_flat })
 
     # Print the DataFrame
-    print(df.describe())
+    #print(df.describe())
     #df.to_csv('data.csv', index=True)
 
     #Oracale imputer
@@ -68,12 +68,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, Missing_lamb
     p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y,strata_size=strata_size, L=L,G=BayesianRidge,verbose=verbose)
     # Append p-values to corresponding lists
     values_LR = [ *p_values, reject, test_time]
-
-    #XGBoost
-    print("XGBoost")
-    XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
-    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=1)
-    values_xgboost = [*p_values, reject, test_time]
 
     #LightGBM
     print("LightGBM")
@@ -101,7 +95,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, Missing_lamb
         np.save('%s/%f/p_values_median_%d.npy' % (filepath, beta_coef, task_id), values_median)
         np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), values_LR)
         np.save('%s/%f/p_values_lightGBM_%d.npy' % (filepath, beta_coef, task_id), values_lightgbm)
-        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef, task_id), values_xgboost)
 
 if __name__ == '__main__':
 
@@ -115,65 +108,23 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
-    # Define your dictionary here based on the table you've given
-    beta_to_lambda = {
-        0.0: 15.338280233232549,
-        0.05: 15.513632949165219,
-        0.1: 15.700965399935757,
-        0.15: 15.778598987947303,
-        0.2: 15.919273976686219,
-        0.25: 16.090606547366434,
-    }
+    for coef in np.arange(0,1.5,0.3):
+        beta_coef = coef
+        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
+    for coef in np.arange(0.0,0.4,0.08):
+        beta_coef = coef
+        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
+    
+    for coef in np.arange(0.0,5,1):
+        beta_coef = coef
+        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
+    for coef in np.arange(0.0,0.80,0.16):
+        beta_coef = coef
+        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
 
     for coef in np.arange(0.0,0.3 ,0.05):
         beta_coef = coef
-        # Round to two decimal places to match dictionary keys
-        beta_coef_rounded = round(beta_coef, 2)
-        if beta_coef_rounded in beta_to_lambda:
-            lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value)
-        else:
-            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
-
-    # Define your dictionary here based on the table you've given
-    beta_to_lambda = {
-        0.0: 15.843098766790078,
-        0.25: 15.869215535712938,
-        0.5: 16.033777034949917,
-        0.75: 16.225243226951633,
-        1.0: 16.411118432384587,
-        1.25: 16.56085697653494,
-    }
-
+        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)
     for coef in np.arange(0.0,1.5,0.25):
         beta_coef = coef
-        # Round to nearest integer to match dictionary keys
-        beta_coef_rounded = round(beta_coef)
-        if beta_coef_rounded in beta_to_lambda:
-            lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = lambda_value)
-        else:
-            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
-
-"""
-    for coef in np.arange(0.0,5,1):
-        beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference" + "_single", adjust = 0, linear_method = 2)
-
-
-
-    for coef in np.arange(0,3,0.6):
-        beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0)
-
-    for coef in np.arange(0.0,0.4,0.08):
-        beta_coef = coef
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0)
-    
-    for coef in np.arange(0.0,10,2):
-        beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1)
-    for coef in np.arange(0.0,0.80,0.16):
-        beta_coef = coef
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1)
-"""
+        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)

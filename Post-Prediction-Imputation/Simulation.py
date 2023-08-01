@@ -187,24 +187,14 @@ class DataGenerator:
       data = pd.DataFrame({'Y_n3_Z': Y_n3_Z, 'Y_n3_X': Y_n3_X, 'Y_n3_U': Y_n3_U})
       print(data.describe())
     
-    if self.Unobserved:
-      assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-      if self.linear_method == 0:
-        Y_n3 = self.beta_32 * Z + sum3 + U +  StrataEps+ IndividualEps 
-      if self.linear_method == 1:
-        Y_n3 = self.beta_32 * Z +  sum3 + sum4 + U+  StrataEps+ IndividualEps 
-      if self.linear_method == 2:
-        Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4  + U +  StrataEps+ IndividualEps
-      
-    else:
-      assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-      if self.linear_method == 0:
-        Y_n3 = self.beta_32 * Z + sum3  +  StrataEps+ IndividualEps 
-      if self.linear_method == 1:
-        Y_n3 = self.beta_32 * Z +  sum3 + sum4 +  StrataEps+ IndividualEps 
-      if self.linear_method == 2:
-        Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4 +  StrataEps+ IndividualEps 
-      
+    assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
+    if self.linear_method == 0:
+      Y_n3 = self.beta_32 * Z + sum3 + U +  StrataEps+ IndividualEps 
+    if self.linear_method == 1:
+      Y_n3 = self.beta_32 * Z +  sum3 + sum4 + U+  StrataEps+ IndividualEps 
+    if self.linear_method == 2:
+      Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4  + U +  StrataEps+ IndividualEps
+    
     Y = Y_n3.reshape(-1, 1)
 
     return Y
@@ -235,22 +225,13 @@ class DataGenerator:
             sum2 += p * np.cos(X[i,p-1])
           sum2 =  (1.0  / np.sqrt(5)) * sum2
 
-          if self.Unobserved:
-            assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-            if self.linear_method == 0:
-              M_lamda[i][0] = sum3 + Y[i, 0] + U[i] + XInter[i] + YInter[i]
-            if self.linear_method == 1:
-              M_lamda[i][0] = sum3 + sum2 + 10 * logistic.cdf(Y[i, 0]) + U[i] + XInter[i] + YInter[i]
-            if self.linear_method == 2:
-              M_lamda[i][0] = sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + U[i] + XInter[i] + YInter[i]
-          else:
-            assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-            if self.linear_method == 0:
-              M_lamda[i][0] = sum3 + Y[i, 0] + XInter[i] + YInter[i]
-            if self.linear_method == 1:
-              M_lamda[i][0] = sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + XInter[i] + YInter[i]
-            if self.linear_method == 2:
-              M_lamda[i][0] = sum3 + sum2 + 10 * logistic.cdf(Y[i, 0]) + XInter[i] + YInter[i]
+          assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
+          if self.linear_method == 0:
+            M_lamda[i][0] = sum3 + Y[i, 0] + U[i] 
+          if self.linear_method == 1:
+            M_lamda[i][0] = sum3 + sum2 + 10 * logistic.cdf(Y[i, 0]) + U[i] 
+          if self.linear_method == 2:
+            M_lamda[i][0] = sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + U[i]
 
         if self.Missing_lambda == None:
           lambda1 = np.percentile(M_lamda, 100 * (1-self.MaskRate))
@@ -275,29 +256,17 @@ class DataGenerator:
             M_lamda_XInter[i][0] = XInter[i]
             M_lamda_YInter[i][0] = YInter[i]
 
-          if self.Unobserved:
-            assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-            if self.linear_method == 0:
-              if sum3 + Y[i, 0] + U[i]  + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1
-            if self.linear_method == 1:
-              if sum3 + sum2   + 10 * logistic.cdf(Y[i, 0])+ U[i] + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1            
-            if self.linear_method == 2:
-              if sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + U[i] + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1 
+          assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
+          if self.linear_method == 0:
+            if sum3 + Y[i, 0] + U[i]  > lambda1:
+              M[i][0] = 1
+          if self.linear_method == 1:
+            if sum3 + sum2   + 10 * logistic.cdf(Y[i, 0])+ U[i] > lambda1:
+              M[i][0] = 1            
+          if self.linear_method == 2:
+            if sum3 + sum2  + 10 * logistic.cdf(Y[i, 0]) + U[i] > lambda1:
+              M[i][0] = 1 
 
-          else:
-            assert(self.linear_method == 0 or self.linear_method == 1 or self.linear_method == 2)
-            if self.linear_method == 0:
-              if sum3 + Y[i, 0]  + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1
-            if self.linear_method == 1:
-              if sum3 + sum2   + 10 * logistic.cdf(Y[i, 0])  + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1            
-            if self.linear_method == 2:
-              if sum3 + sum2   + 10 * logistic.cdf(Y[i, 0]) + XInter[i] + YInter[i] > lambda1:
-                M[i][0] = 1 
 
         if self.verbose:
           data = pd.DataFrame(M_lamda_Y, columns=['Y1'])
@@ -314,111 +283,6 @@ class DataGenerator:
 
         return M
 
-      else:
-        M = np.zeros((n, 3))
-        M_lamda = np.zeros((n, 3))
-
-        #for verbose
-        if self.verbose:
-          M_lamda_Y = np.zeros((n, 3))
-          M_lamda_X = np.zeros((n, 3))
-          M_lamda_U = np.zeros((n, 3))
-
-        for i in range(n):
-            sum1 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                sum1 += X[i,p-1] * X[i,p_2-1]
-            sum1 = (1.0  / np.sqrt(5 * 5)) * sum1
-            
-            sum2 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                sum2 += X[i,p-1] * X[i,p_2-1]
-            sum2 = (1.0  / np.sqrt(5 * 5)) * sum2
-
-            sum3 = 0
-            for p in range(1,6):
-                sum3 += p * X[i,p-1] 
-            sum3 = (1.0  / np.sqrt(5)) * sum3
-
-            sum4 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                for p_3 in range(1,6):
-                  sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
-            sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
-
-            M_lamda[i][0] = (1.0  / np.sqrt(5))* logistic.cdf(X[i, :]).sum() + sum1 + -1 * logistic.cdf(Y[i, 0])
-
-            M_lamda[i][1] = (1.0  / np.sqrt(5))*((X[i, :]**3).sum() + sum2  + -1 * Y[i, 0] + -1 * Y[i, 1])
-
-            M_lamda[i][2] = (sum3 + sum4 + -1 * Y[i, 0] + -1 * logistic.cdf(Y[i, 1]) + -1 * np.absolute(Y[i, 2]))
-
-
-            if self.verbose:
-              M_lamda_Y[i][0] = logistic.cdf(Y[i, 0])
-              M_lamda_X[i][0] = (1.0  / np.sqrt(5))* logistic.cdf(X[i, :]).sum() + sum1
-              M_lamda_U[i][0] = np.sin(U[i])**3
-
-              M_lamda_Y[i][1] =  Y[i, 0] + Y[i, 1]
-              M_lamda_X[i][1] = (1.0  / np.sqrt(5))*((X[i, :]**3).sum() + sum2 )
-              M_lamda_U[i][1] = (U[i])
-
-              M_lamda_Y[i][2] = ( Y[i, 0] + logistic.cdf(Y[i, 1]) + np.absolute(Y[i, 2]))
-              M_lamda_X[i][2] = (sum3 + sum4)
-              M_lamda_U[i][2] = ( np.sin(U[i]))
-
-        if self.verbose:
-          data = pd.DataFrame(M_lamda_Y, columns=['Y1', 'Y2', 'Y3'])
-          data['X1'] = M_lamda_X[:,0]
-          data['X2'] = M_lamda_X[:,1]
-          data['X3'] = M_lamda_X[:,2]
-          data['U1'] = M_lamda_U[:,0]
-          data['U2'] = M_lamda_U[:,1]
-          data['U3'] = M_lamda_U[:,2]
-          print(data.describe())
-
-        # calculate 1 - Maskrate percentile
-        lambda1 = np.percentile(M_lamda[:,0], 100 * (1-self.MaskRate))
-        lambda2 = np.percentile(M_lamda[:,1], 100 * (1-self.MaskRate))
-        lambda3 = np.percentile(M_lamda[:,2], 100 * (1-self.MaskRate))
-            
-        for i in range(n):
-            values = np.zeros(3)
-            sum1 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                sum1 += X[i,p-1] * X[i,p_2-1]
-            sum1 = (1.0  / np.sqrt(5 * 5)) * sum1
-            
-            sum2 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                sum2 += X[i,p-1] * X[i,p_2-1]
-            sum2 = (1.0  / np.sqrt(5 * 5)) * sum2
-
-            sum3 = 0
-            for p in range(1,6):
-                sum3 += p * X[i,p-1] 
-            sum3 = (1.0  / np.sqrt(5)) * sum3
-
-            sum4 = 0
-            for p in range(1,6):
-              for p_2 in range(1,6):
-                for p_3 in range(1,6):
-                  sum4 += X[i,p-1] * X[i,p_2-1] * X[i,p_3-1]
-            sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
-
-            values[0] = (1.0  / np.sqrt(5))* logistic.cdf(X[i, :]).sum() + sum1 + -1 * logistic.cdf(Y[i, 0])
-            values[1] = (1.0  / np.sqrt(5))*((X[i, :]**3).sum() + sum2 + -1 * Y[i, 0] + -1 * Y[i, 1])
-            values[2] = (sum3 + sum4 + -1 * Y[i, 0] + -1 * logistic.cdf(Y[i, 1]) + -1 * np.absolute(Y[i, 2]))
-
-            M[i][0] = (values[0] > lambda1)
-            M[i][1] =  (values[1] > lambda2)
-            M[i][2] =  (values[2] > lambda3)
-
-        return M
   
   def GenerateData(self):  
     # Generate X
