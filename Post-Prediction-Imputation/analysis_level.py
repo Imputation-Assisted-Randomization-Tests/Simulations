@@ -19,12 +19,14 @@ def read_and_print_npz_files(directory, file):
     summed_p_values_median = None
     summed_p_values_LR = None
     summed_p_values_lightGBM = None
+    summed_p_values_oracle = None
 
     p_values_median = []
     p_values_LR = []
     p_values_lightGBM = []
+    p_values_oracle = []
 
-    N = int(len(os.listdir(directory)) / 3)
+    N = int(len(os.listdir(directory)) / 4)
     for filename in os.listdir(directory):
 
         if filename.endswith(".npy"):
@@ -49,6 +51,11 @@ def read_and_print_npz_files(directory, file):
                 else:
                     summed_p_values_lightGBM += p_values
                 p_values_lightGBM.append(list(p_values))
+            elif "p_values_oracle" in filename:
+                if summed_p_values_oracle is None:
+                    summed_p_values_oracle = p_values
+                else:
+                    summed_p_values_oracle += p_values
 
 
     file.write("Mean p-values for Median Imputer:\n")
@@ -57,6 +64,8 @@ def read_and_print_npz_files(directory, file):
     file.write("Power: " + str(summed_p_values_LR/N) + "\n")
     file.write("Mean p-values for lightGBM Imputer:\n")
     file.write("Power: " + str(summed_p_values_lightGBM/N) + "\n")
+    file.write("Mean p-values for Oracle Imputer:\n")
+    file.write("Power: " + str(summed_p_values_oracle/N) + "\n")
 
     file.write("Plotting the distribution of the first 6 p-values for each imputer\n")
 
@@ -66,13 +75,15 @@ def read_and_print_npz_files(directory, file):
     plot_p_values_distribution(p_values_LR, "LR Imputer", file)
     file.write("LightGBM Imputer\n")
     plot_p_values_distribution(p_values_lightGBM, "LightGBM Imputer", file)
+    file.write("Oracle Imputer\n")
+    plot_p_values_distribution(p_values_oracle, "Oracle Imputer", file)
     file.write("\n")
 
 def plot_p_values_distribution(p_values, imputer_name, file):
     p_values = np.array(p_values)
     fig, axs = plt.subplots(1, 6, figsize=(12, 4), tight_layout=True)
 
-    for i in range(0, 1):
+    for i in range(0, 3):
         axs[i].hist(p_values[:, i])
         axs[i].set_title(f"p-value {i + 1}")
         file.write(str(scipy.stats.kstest(p_values[:, i], 'uniform')) + "\n")
@@ -104,6 +115,6 @@ def plot_p_values_distribution(p_values, imputer_name, file):
         plt.show()
 
 with open("level.result", "w") as file:
-    read_and_print_npz_files('Result/HPC_power_1000_unobserved_interference_single/0.000000', file)
+    read_and_print_npz_files('Result/HPC_power_1000_unobserved_multi/0.000000', file)
 
 

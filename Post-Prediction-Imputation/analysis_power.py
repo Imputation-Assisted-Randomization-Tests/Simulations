@@ -41,13 +41,13 @@ def read_npz_files(directory):
                     summed_p_values_oracle += p_values
 
     results = {
-        'median_power': summed_p_values_median[1] / N,
+        'median_power': summed_p_values_median[3] / N,
         'median_corr': summed_p_values_median[2] / N,
-        'lr_power': summed_p_values_LR[1] / N,
+        'lr_power': summed_p_values_LR[3] / N,
         'lr_corr': summed_p_values_LR[2] / N,
-        'lightGBM_power': summed_p_values_lightGBM[1] / N,
+        'lightGBM_power': summed_p_values_lightGBM[3] / N,
         'lightGBM_corr': summed_p_values_lightGBM[2] / N,
-        'oracle_power': summed_p_values_oracle[1] / N,
+        'oracle_power': summed_p_values_oracle[3] / N,
         'oracle_corr': summed_p_values_oracle[2] / N,
     }
     return results

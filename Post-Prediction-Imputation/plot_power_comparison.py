@@ -65,8 +65,8 @@ def plot(range,dir,title):
 
 def main():
 
-    plot(np.arange(0,1.5,0.3),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, linearZ_linearX, U")
+    plot(np.arange(0.0, 0.72, 0.12),"HPC_power_100_unobserved" + "_multi","Size-100, Multi-missing, U")
 
-    plot(np.arange(0.0,0.4,0.08),"HPC_power_1000_unobserved_linearZ_linearX" + "_single","Size-1000, linearZ_linearX, U")
+    plot(np.arange(0.0, 0.18, 0.03),"HPC_power_1000_unobserved" + "_multi","Size-1000, Multi-missing, U")
 
 main()
