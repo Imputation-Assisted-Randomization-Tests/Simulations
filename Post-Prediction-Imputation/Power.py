@@ -10,7 +10,7 @@ import os
 import lightgbm as lgb
 import xgboost as xgb
 import pandas as pd
-from catboost import CatBoostRegressor
+#from catboost import CatBoostRegressor
 
 beta_coef = None
 task_id = 1
@@ -19,9 +19,9 @@ max_iter = 3
 L = 100
 S_size = 10
 
-class CatBoostRegressorForImputer(CatBoostRegressor):
-    def transform(self, X):
-        return self.predict(X)
+#class CatBoostRegressorForImputer(CatBoostRegressor):
+#    def transform(self, X):
+#        return self.predict(X)
 
 def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size, Missing_lambda = None,verbose=1):
 
