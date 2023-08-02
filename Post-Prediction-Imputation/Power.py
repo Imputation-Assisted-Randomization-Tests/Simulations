@@ -18,7 +18,7 @@ max_iter = 3
 L = 100
 S_size = 10
 
-def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size, Missing_lambda = None,verbose=1):
+def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,verbose=1):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -30,24 +30,11 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
     print("Begin")
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, linear_method = linear_method,verbose=verbose,Missing_lambda = Missing_lambda)
+    DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, verbose=verbose,Missing_lambda = Missing_lambda)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
-    # Flatten Z, U, Y, M, S from (50,1) to (50,)
-    Z_flat = np.squeeze(Z)
-    U_flat = np.squeeze(U)
-    Y_flat = np.squeeze(Y)
-    M_flat = np.squeeze(M)
-    S_flat = np.squeeze(S)
-
-    # Make a dataframe from X (each column separately), Z, U, Y, M, S
-    df = pd.DataFrame({'X1': X[:, 0], 'X2': X[:, 1], 'X3': X[:, 2], 'X4': X[:, 3], 'X5': X[:, 4], 
-                    'U': U_flat, 'Y': Y_flat,  'M': M_flat,'Z': Z_flat })
-
-    # Print the DataFrame
-    #print(df.describe())
-    #df.to_csv('data.csv', index=True)
+    print(X.shape, Z.shape, U.shape, Y.shape, M.shape, S.shape)
 
     #Oracale imputer
     print("Oracle")
@@ -108,23 +95,12 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
-    for coef in np.arange(0,1.5,0.3):
+    for coef in np.arange(0.0, 0.72, 0.12): 
         beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
-    for coef in np.arange(0.0,0.4,0.08):
-        beta_coef = coef
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
-    
-    for coef in np.arange(0.0,5,1):
-        beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
-    for coef in np.arange(0.0,0.80,0.16):
-        beta_coef = coef
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
+        run(100, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_1000_unobserved" + "_multi", adjust = 0,strata_size = S_size )
 
-    for coef in np.arange(0.0,0.3 ,0.05):
+
+    for coef in np.arange(0.0, 0.18, 0.03): 
         beta_coef = coef
-        run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)
-    for coef in np.arange(0.0,1.5,0.25):
-        beta_coef = coef
-        run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)
+        run(1000, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_1000_unobserved" + "_multi", adjust = 0,strata_size = S_size )
+
