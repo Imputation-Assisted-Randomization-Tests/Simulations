@@ -56,6 +56,7 @@ def read_and_print_npz_files(directory, file):
                     summed_p_values_oracle = p_values
                 else:
                     summed_p_values_oracle += p_values
+                p_values_oracle.append(list(p_values))
 
 
     file.write("Mean p-values for Median Imputer:\n")
@@ -81,11 +82,9 @@ def read_and_print_npz_files(directory, file):
 
 def plot_p_values_distribution(p_values, imputer_name, file):
     p_values = np.array(p_values)
-    fig, axs = plt.subplots(1, 6, figsize=(12, 4), tight_layout=True)
 
+    print(p_values.shape)
     for i in range(0, 3):
-        axs[i].hist(p_values[:, i])
-        axs[i].set_title(f"p-value {i + 1}")
         file.write(str(scipy.stats.kstest(p_values[:, i], 'uniform')) + "\n")
         proportion_below_005 = proportions_below_threshold(p_values[:, i], threshold_005)
         proportion_below_010 = proportions_below_threshold(p_values[:, i], threshold_010)
