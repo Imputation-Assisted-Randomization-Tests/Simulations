@@ -10,6 +10,7 @@ import os
 import lightgbm as lgb
 import xgboost as xgb
 import pandas as pd
+from catboost import CatBoostRegressor
 
 beta_coef = None
 task_id = 1
@@ -17,6 +18,10 @@ save_file = False
 max_iter = 3
 L = 100
 S_size = 10
+
+class CatBoostRegressorForImputer(CatBoostRegressor):
+    def transform(self, X):
+        return self.predict(X)
 
 def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size, Missing_lambda = None,verbose=1):
 
@@ -69,6 +74,18 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
     # Append p-values to corresponding lists
     values_LR = [ *p_values, reject, test_time]
 
+    #XGBoost
+    print("XGBoost")
+    XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
+    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=1)
+    values_xgboost = [*p_values, reject, test_time]
+
+    #CatBoost
+    """print("CatBoost")
+    catboost = IterativeImputer(estimator=CatBoostRegressorForImputer(verbose=0,thread_count=1), max_iter=max_iter)
+    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=catboost, verbose=1)
+    values_catboost = [*p_values, reject, test_time] """
+
     #LightGBM
     print("LightGBM")
     #start_time = time.time()
@@ -89,12 +106,17 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
         values_median = np.array(values_median)
         values_LR = np.array(values_LR)
         values_lightgbm = np.array(values_lightgbm)
+        values_oracle = np.array(values_oracle)
+        values_xgboost = np.array(values_xgboost)
+        values_catboost = np.array(values_catboost)
 
         # Save numpy arrays to files
         np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), values_oracle)
         np.save('%s/%f/p_values_median_%d.npy' % (filepath, beta_coef, task_id), values_median)
         np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), values_LR)
         np.save('%s/%f/p_values_lightGBM_%d.npy' % (filepath, beta_coef, task_id), values_lightgbm)
+        np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef, task_id), values_xgboost)
+        np.save('%s/%f/p_values_catboost_%d.npy' % (filepath, beta_coef, task_id), values_catboost)
 
 if __name__ == '__main__':
 
@@ -111,20 +133,22 @@ if __name__ == '__main__':
     for coef in np.arange(0,1.5,0.3):
         beta_coef = coef
         run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
-    for coef in np.arange(0.0,0.4,0.08):
-        beta_coef = coef
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
+    
+    #for coef in np.arange(0.0,0.4,0.08):
+    #    beta_coef = coef
+    #    run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size)
     
     for coef in np.arange(0.0,5,1):
         beta_coef = coef
         run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
-    for coef in np.arange(0.0,0.80,0.16):
-        beta_coef = coef
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
+    
+    #for coef in np.arange(0.0,0.80,0.16):
+    #    beta_coef = coef
+    #    run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size)
 
-    for coef in np.arange(0.0,0.3 ,0.05):
-        beta_coef = coef
-        run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)
+    #for coef in np.arange(0.0,0.3 ,0.05):
+    #    beta_coef = coef
+    #    run(2000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)
     for coef in np.arange(0.0,1.5,0.25):
         beta_coef = coef
         run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size)

@@ -273,9 +273,11 @@ class RetrainTest:
         Y = Y.filled(np.nan)
 
         df_Z = pd.DataFrame(np.concatenate((Z, X, Y), axis=1))
-
+        df_Z.columns = [None] * df_Z.shape[1]
 
         df_noZ = pd.DataFrame(np.concatenate((X, Y), axis=1))
+        df_noZ.columns = [None] * df_noZ.shape[1]
+
         G_model = clone(G)
 
         # lenY is the number of how many columns are Y
@@ -319,6 +321,7 @@ class RetrainTest:
             
             G_clone = clone(G_model)
             df_Z = pd.DataFrame(np.concatenate((Z_sim, X, Y), axis=1))
+            df_Z.columns = [None] * df_Z.shape[1]
             bias = self.getY(G_clone, df_Z, df_noZ, indexY, lenY)
 
             # get the test statistics 
@@ -334,7 +337,7 @@ class RetrainTest:
         p_values = []
         for i in range(lenY):
             p_values.append(np.mean(t_sim[:,i] >= t_obs[i], axis=0))
-        reject = self.holm_bonferroni(p_values,alpha = 0.2)
+        reject = self.holm_bonferroni(p_values)
 
         end_time = time.time()
         test_time = end_time - start_time
