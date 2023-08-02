@@ -108,7 +108,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
         values_lightgbm = np.array(values_lightgbm)
         values_oracle = np.array(values_oracle)
         values_xgboost = np.array(values_xgboost)
-        values_catboost = np.array(values_catboost)
 
         # Save numpy arrays to files
         np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), values_oracle)
@@ -116,7 +115,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
         np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), values_LR)
         np.save('%s/%f/p_values_lightGBM_%d.npy' % (filepath, beta_coef, task_id), values_lightgbm)
         np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef, task_id), values_xgboost)
-        np.save('%s/%f/p_values_catboost_%d.npy' % (filepath, beta_coef, task_id), values_catboost)
 
 if __name__ == '__main__':
 
