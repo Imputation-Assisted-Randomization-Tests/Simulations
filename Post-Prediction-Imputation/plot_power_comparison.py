@@ -65,16 +65,16 @@ def plot(range,dir,title):
 
 def main():
 
-    plot(np.arange(0,1.5,0.3),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, linearZ_linearX, U")
+    plot(np.arange(0,1.5,0.3),"HPC_power_100_unobserved_linearZ_linearX" + "_single","Size-100, linearZ_linearX, U")
 
-    plot(np.arange(0.0,0.4,0.08),"HPC_power_1000_unobserved_linearZ_linearX" + "_single","Size-1000, linearZ_linearX, U")
+    plot(np.arange(0.0,0.4,0.08),"HPC_power_2000_unobserved_linearZ_linearX" + "_single","Size-2000, linearZ_linearX, U")
 
-    plot(np.arange(0.0,5,1),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, linearZ_nonlinearX, U")
+    plot(np.arange(0.0,5,1),"HPC_power_100_unobserved_linearZ_nonlinearX" + "_single","Size-100, linearZ_nonlinearX, U")
 
-    plot(np.arange(0.0,0.80,0.16),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, linearZ_nonlinearX, U")
+    plot(np.arange(0.0,0.80,0.16),"HPC_power_2000_unobserved_linearZ_nonlinearX" + "_single","Size-2000, linearZ_nonlinearX, U")
 
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, nonlinearZ_nonlinearX, U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_nonlinearZ_nonlinearX" + "_single","Size-100, nonlinearZ_nonlinearX, U")
 
-    plot(np.arange(0.0,0.3 ,0.05),"HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-1000, nonlinearZ_nonlinearX, U")
+    plot(np.arange(0.0,0.3 ,0.05),"HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-2000, nonlinearZ_nonlinearX, U")
 
 main()

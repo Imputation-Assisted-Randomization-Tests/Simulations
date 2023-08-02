@@ -104,6 +104,6 @@ def plot_p_values_distribution(p_values, imputer_name, file):
         plt.show()
 
 with open("level.result", "w") as file:
-    read_and_print_npz_files('Result/HPC_power_1000_unobserved_interference_single/0.000000', file)
+    read_and_print_npz_files('Result/HPC_power_2000_unobserved_interference_single/0.000000', file)
 
 
