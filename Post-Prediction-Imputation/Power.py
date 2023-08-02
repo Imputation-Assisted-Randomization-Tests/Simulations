@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     for coef in np.arange(0.0, 0.72, 0.12): 
         beta_coef = coef
-        run(100, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_1000_unobserved" + "_multi", adjust = 0,strata_size = S_size )
+        run(100, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_100_unobserved" + "_multi", adjust = 0,strata_size = S_size )
 
 
     for coef in np.arange(0.0, 0.18, 0.03): 
