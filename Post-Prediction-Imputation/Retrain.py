@@ -14,7 +14,7 @@ class RetrainTest:
     #load data
     def __init__(self,N,covariance_adjustment = 0):
         self.N = N
-        self.covariance_adjustment = covariance_adjustment # 0 = Null, 1 = LR, 2 = XG
+        self.covariance_adjustment = covariance_adjustment # 0 = Null, 1 = LR, 2 = own
 
     def holm_bonferroni(self,p_values, alpha = 0.05):
         # Perform the Holm-Bonferroni correction
@@ -27,10 +27,12 @@ class RetrainTest:
 
     def getY(self, G, df_Z, df_noZ, indexY ,lenY):
         if G:
+            imputer = clone(G)
             df_imputed = G.fit_transform(df_Z)
-            
         else:
             df_imputed = df_Z.to_numpy()
+            if self.covariance_adjustment == 2:
+                return df_imputed[:,indexY:indexY+lenY] - df_imputed[:,indexY-1:indexY+lenY-1]
 
         #df_noZ_imputed = df_noZ.to_numpy()
         if self.covariance_adjustment == 0:
@@ -40,7 +42,7 @@ class RetrainTest:
             df_noZ_imputed = G2.fit_transform(df_noZ)
             return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
         if self.covariance_adjustment == 2:
-            G2 = IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=3)
+            G2 = IterativeImputer(estimator = imputer,max_iter=3)
             df_noZ_imputed = G2.fit_transform(df_noZ)
             return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
 

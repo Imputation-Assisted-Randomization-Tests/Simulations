@@ -131,19 +131,12 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_0" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_1" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_2" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
-
-    # Define your dictionary here based on the table you've given
-    beta_to_lambda = {
-        0.0: 15.843098766790078,
-        0.25: 15.869215535712938,
-        0.5: 16.033777034949917,
-        0.75: 16.225243226951633,
-        1.0: 16.411118432384587,
-        1.25: 16.56085697653494,
-    }
 
     for coef in np.arange(0.0,1.5,0.25):
         beta_coef = coef
@@ -151,6 +144,8 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
+            run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
+            run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
             run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
