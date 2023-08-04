@@ -66,13 +66,19 @@ def plot(range,dir,title):
 def main():
 
     plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference_adjutment_0" + "_single","L-100,Size-1000,no-adjustment,U")
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_0" + "_single","L-100,Size-50,no-adjustment,U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_0" + "_single","L-100,Size-100,no-adjustment,U")
     
     plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference_adjutment_1" + "_single","L-100,Size-1000,cov-adjustment-LR,U")
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_1" + "_single","L-100,Size-50,cov-adjustment-LR,U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_1" + "_single","L-100,Size-100,cov-adjustment-LR,U")
     
     plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference_adjutment_2" + "_single","L-100,Size-1000,cov-adjustment-original,U")
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_2" + "_single","L-100,Size-50,cov-adjustment-original,U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_2" + "_single","L-100,Size-100,cov-adjustment-original,U")
+
+    plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference_adjutment_3" + "_single","L-100,Size-1000,cov-adjustment-xgboost,U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_3" + "_single","L-100,Size-100,cov-adjustment-xgboost,U")
+
+    plot(np.arange(0.0,0.3,0.05),"HPC_power_1000_unobserved_interference_adjutment_4" + "_single","L-100,Size-1000,cov-adjustment-lightGBM,U")
+    plot(np.arange(0.0,1.5,0.25),"HPC_power_100_unobserved_interference_adjutment_4" + "_single","L-100,Size-100,cov-adjustment-lightGBM,U")
 
     exit()
     #plot(np.arange(0.0,3.1,0.5),"HPC_power_50_linearZ_linearX" + "_single","Size-50, linearZ_linearX, No U")

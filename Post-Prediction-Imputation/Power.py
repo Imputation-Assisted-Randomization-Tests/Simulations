@@ -15,7 +15,7 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 100
+L = 1
 S_size = 10
 
 def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, Missing_lambda,strata_size, verbose=1):
@@ -132,8 +132,10 @@ if __name__ == '__main__':
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
             run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_0" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_1" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_2" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_1" + "_single", adjust = 1, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_2" + "_single", adjust = 2, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_3" + "_single", adjust = 3, linear_method = 2,strata_size = S_size, Missing_lambda = None)
+            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjutment_4" + "_single", adjust = 4, linear_method = 2,strata_size = S_size, Missing_lambda = None)
 
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
@@ -141,14 +143,11 @@ if __name__ == '__main__':
     for coef in np.arange(0.0,1.5,0.25):
         beta_coef = coef
         # Round to nearest integer to match dictionary keys
-        beta_coef_rounded = round(beta_coef)
-        if beta_coef_rounded in beta_to_lambda:
-            lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
-            run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
-            run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
-        else:
-            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
+        run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference_0" + "_single", adjust = 0, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
+        run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference_1" + "_single", adjust = 1, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
+        run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference_2" + "_single", adjust = 2, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
+        run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference_3" + "_single", adjust = 3, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
+        run(100, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_100_unobserved_interference_4" + "_single", adjust = 4, linear_method = 2,strata_size = S_size,  Missing_lambda = None)
 
 """
     for coef in np.arange(0.0,5,1):

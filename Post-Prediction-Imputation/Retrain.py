@@ -8,6 +8,8 @@ from sklearn.impute import IterativeImputer
 from sklearn import linear_model
 import xgboost as xgb
 import time
+import lightgbm as lgb
+
 
 
 class RetrainTest:
@@ -42,9 +44,18 @@ class RetrainTest:
             df_noZ_imputed = G2.fit_transform(df_noZ)
             return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
         if self.covariance_adjustment == 2:
-            G2 = IterativeImputer(estimator = imputer,max_iter=3)
+            G2 = imputer
             df_noZ_imputed = G2.fit_transform(df_noZ)
             return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
+        if self.covariance_adjustment == 3:
+            G2 = IterativeImputer(estimator = xgb.XGBRegressor(n_jobs=1),max_iter=3) #IterativeImputer(estimator = xgb.XGBRegressor(),max_iter=3)#
+            df_noZ_imputed = G2.fit_transform(df_noZ)
+            return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
+        if self.covariance_adjustment == 4:
+            G2 = IterativeImputer(estimator = lgb.LGBMRegressor(n_jobs=1),max_iter=3)
+            df_noZ_imputed = G2.fit_transform(df_noZ)
+            return df_imputed[:,indexY:indexY+lenY] - df_noZ_imputed[:,indexY-1:indexY+lenY-1]
+            
 
     def get_corr(self, G, df, Y, indexY, lenY):
         # Get the imputed data Y and indicator Z
