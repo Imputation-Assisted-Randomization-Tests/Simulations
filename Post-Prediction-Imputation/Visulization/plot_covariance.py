@@ -29,25 +29,29 @@ def plot_results2(data, data_LR_adjusted, data_xgboost_adjusted):
         plt.grid()
         plt.show()
 
-def plot_results(data, data_LR_adjusted, data_xgboost_adjusted):
-    data = [[row[0], row[1], row[2], row[3], row[4]] for row in data]
-    data_LR_adjusted = [[row[0], row[1], row[2], row[3], row[4]] for row in data_LR_adjusted]
-    data_xgboost_adjusted = [[row[0], row[1], row[2], row[3], row[4]] for row in data_xgboost_adjusted]
+def plot_results(data, data_LR_adjusted, data_xgboost_adjusted, data_lightGBM_adjusted):
+    data = [[row[0], row[1], row[2], row[3], row[4], row[5]] for row in data]
+    data_LR_adjusted = [[row[0], row[1], row[2], row[3], row[4], row[5]] for row in data_LR_adjusted]
+    data_xgboost_adjusted = [[row[0], row[1], row[2], row[3], row[4], row[5]] for row in data_xgboost_adjusted]
+    data_lightGBM_adjusted = [[row[0], row[1], row[2], row[3], row[4], row[5]] for row in data_lightGBM_adjusted]
     
-    columns = ['beta', 'Median', 'Linear', 'XGBoost', 'Oracle']
-    columns_LR = ['beta', 'Median_LR', 'Linear_LR', 'XGBoost_LR', 'Oracle_LR']
-    columns_XGBoost = ['beta', 'Median_XGBoost', 'Linear_XGBoost', 'XGBoost_XGBoost', 'Oracle_XGBoost']
+    columns = ['beta', 'Median', 'Linear', 'XGBoost', 'Oracle', 'lightGBM']
+    columns_LR = ['beta', 'Median_LR', 'Linear_LR', 'XGBoost_LR', 'Oracle_LR', 'lightGBM_LR']
+    columns_XGBoost = ['beta', 'Median_XGBoost', 'Linear_XGBoost', 'XGBoost_XGBoost', 'Oracle_XGBoost', 'lightGBM_XGBoost']
+    columns_lightGBM = ['beta', 'Median_lightGBM', 'Linear_lightGBM', 'XGBoost_lightGBM', 'Oracle_lightGBM', 'lightGBM_lightGBM']
+
     
     df = pd.DataFrame(data, columns=columns)
     df_LR = pd.DataFrame(data_LR_adjusted, columns=columns_LR)
     df_XGBoost = pd.DataFrame(data_xgboost_adjusted, columns=columns_XGBoost)
+    df_lightGBM = pd.DataFrame(data_lightGBM_adjusted, columns=columns_lightGBM)
 
-    linestyles = ['-', '--', '-.']
-    datasets = [df, df_LR, df_XGBoost]
-    labels = ['Original', 'LR Adjusted', 'XGBoost Adjusted']
+    linestyles = ['-', '--', '-.', ':']
+    datasets = [df, df_LR, df_XGBoost, df_lightGBM]
+    labels = ['Original', 'LR Adjusted', 'XGBoost Adjusted', 'lightGBM Adjusted']
 
-    methods = ['Median', 'Linear', 'XGBoost', 'Oracle']
-    adjusted_methods = ['_LR', '_XGBoost']
+    methods = ['Median', 'Linear', 'XGBoost', 'Oracle', 'lightGBM']
+    adjusted_methods = ['_LR', '_XGBoost', '_lightGBM']
 
     for method in methods:
         plt.figure(figsize=(10, 6))
@@ -62,7 +66,7 @@ def plot_results(data, data_LR_adjusted, data_xgboost_adjusted):
 
         plt.title(f'{method} Method Comparison')
         plt.xlabel('Beta')
-        plt.ylabel('Absolute Error')
+        plt.ylabel('Power')
         plt.legend()
         plt.grid()
         plt.show()
