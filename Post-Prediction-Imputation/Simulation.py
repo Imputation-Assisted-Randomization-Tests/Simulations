@@ -242,10 +242,6 @@ class DataGenerator:
           print(data.describe())
           print(pd.DataFrame(M).describe())
 
-        if self.Missing_lambda == None:
-          with open('lambda.txt', 'a') as f:
-            f.write(str(lambda1) + '\n')
-
         return M
 
   

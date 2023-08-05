@@ -241,7 +241,7 @@ class RetrainTest:
         p_values = []
         for i in range(lenY):
             p_values.append(np.mean(t_sim[:,i] >= t_obs[i], axis=0))
-        reject = self.holm_bonferroni(p_values,alpha = 0.2)
+        reject = self.holm_bonferroni(p_values)
 
         end_time = time.time()
         test_time = end_time - start_time
