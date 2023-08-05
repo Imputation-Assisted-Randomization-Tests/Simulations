@@ -118,19 +118,6 @@ class DataGenerator:
 
   def GenerateY(self, X, U, Z,  StrataEps, IndividualEps):
         
-    #def sum1():
-    sum1 = np.zeros(self.N)
-    for p in range(1,6):
-      sum1 += logistic.cdf(X[:,p-1])
-    sum1 = (1.0 / np.sqrt(5)) * sum1
-
-    #def sum2():
-    sum2 = np.zeros(self.N)
-    for p in range(1,6):
-      for p_2 in range(1,6):
-        sum2 += X[:,p-1] * X[:,p_2-1]
-    sum2 = (1.0 / np.sqrt(5 * 5)) * sum2
-
     #def sum3():
     sum3 = np.zeros(self.N)
     for p in range(1,6):
@@ -149,28 +136,6 @@ class DataGenerator:
     for p in range(1,6):
       sum5 += np.absolute(X[:,p-1])
     sum5 = (1.0  / np.sqrt(5)) * sum5
-
-    #def sum6(): 
-    sum6 = np.zeros(self.N)
-    for p in range(1,6):
-      sum6 += X[:,p-1]
-    sum6 = (1.0  / np.sqrt(5)) * sum6
-
-    #def sum7(): 
-    sum7 = np.zeros(self.N)
-    for p in range(1,6):
-      for p_2 in range(1,6):
-        for p_3 in range(1,6):
-          sum7 += X[:,p-1] * X[:,p_2-1] * logistic.cdf(X[:,p_3-1])
-    sum7 = (1.0  / np.sqrt(5 * 5 * 5)) * sum7
-
-    #def sum8(): 
-    sum8 = np.zeros(self.N)
-    for p in range(1,6):
-      for p_2 in range(1,6):
-        for p_3 in range(1,6):
-          sum8 += X[:,p-1] * X[:,p_2-1] * np.cos(1 - 4*X[:,p_3-1])
-    sum8 = (1.0  / np.sqrt(5 * 5 )) * sum8  
 
     U = U.reshape(-1,)
     Z = Z.reshape(-1,)
@@ -277,9 +242,9 @@ class DataGenerator:
           print(data.describe())
           print(pd.DataFrame(M).describe())
 
-        #if self.Missing_lambda == None:
-          #with open('lambda.txt', 'a') as f:
-          #  f.write(str(lambda1) + '\n')
+        if self.Missing_lambda == None:
+          with open('lambda.txt', 'a') as f:
+            f.write(str(lambda1) + '\n')
 
         return M
 
