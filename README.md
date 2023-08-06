@@ -22,7 +22,7 @@ pip -version >= 22.0.4
 - Get into the directory
  `cd Post-prediction-Causal-Inference`
  - Get the python module from HPC to have a python version great than 3.8
-`module python`
+`module load  python/intel/3.8.6`
  - Create the venv 
  `python -m venv venv`
  - Upgrade the pip vesion
