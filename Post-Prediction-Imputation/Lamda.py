@@ -19,19 +19,14 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 2000
 
-def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, linear_method):
-
-    # If the folder does not exist, create it
-    if not os.path.exists(filepath):
-        os.makedirs(filepath)
+def run(Nsize, Unobserved, Single, adjust, strata_size):
 
     # Create an instance of the OneShot class
     Framework = Retrain.RetrainTest(N = Nsize, covariance_adjustment=adjust)
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, strata_size=strata_size, beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, linear_method = linear_method,verbose=0)
+    DataGen = Generator.DataGenerator(N = Nsize, strata_size=strata_size, beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single,verbose=0)
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
 def calculate_average(filename):
@@ -51,30 +46,46 @@ def calculate_average(filename):
 if __name__ == '__main__':
     # Mask Rate
 
-    beta_to_lambda = {}
-
-    for coef in np.arange(0.0,0.3,0.05):
-        if os.path.isfile("lambda.txt"):
+    for coef in np.arange(0.0, 0.18, 0.03):
+        if os.path.isfile("lambda1.txt"):
             # If the file exists, delete it
-            os.remove("lambda.txt")
+            os.remove("lambda1.txt")
+        if os.path.isfile("lambda2.txt"):
+            # If the file exists, delete it
+            os.remove("lambda2.txt")
+        if os.path.isfile("lambda3.txt"):
+            # If the file exists, delete it
+            os.remove("lambda3.txt")
         for i in range(100):
             beta_coef = coef
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", strata_size = 10, adjust = 0, linear_method = 2)
-        avg_lambda = calculate_average('lambda.txt')
-        print("beta: "+str(coef) + "   lambda:" + str(avg_lambda))
-        beta_to_lambda[coef] = avg_lambda
-
+            run(1000, Unobserved = 1, Single = 0, strata_size = 10, adjust = 0)
+        avg_lambda1 = calculate_average('lambda1.txt')
+        print("beta: "+str(coef) + "   lambda1:" + str(avg_lambda1))
+        avg_lambda2 = calculate_average('lambda2.txt')
+        print("beta: "+str(coef) + "   lambda2:" + str(avg_lambda2))
+        avg_lambda3 = calculate_average('lambda3.txt')
+        print("beta: "+str(coef) + "   lambda3:" + str(avg_lambda3))
     print("=====================================================")
 
-    for coef in np.arange(0.0,1.5,0.25):
-        if os.path.isfile("lambda.txt"):
-            os.remove("lambda.txt")
+    for coef in np.arange(0.0, 0.72, 0.12):
+        if os.path.isfile("lambda1.txt"):
+            # If the file exists, delete it
+            os.remove("lambda1.txt")
+        if os.path.isfile("lambda2.txt"):
+            # If the file exists, delete it
+            os.remove("lambda2.txt")
+        if os.path.isfile("lambda3.txt"):
+            # If the file exists, delete it
+            os.remove("lambda3.txt")
         for i in range(100):
             beta_coef = coef
-            run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_2000_unobserved_nonlinearZ_nonlinearX" + "_single", strata_size = 10,adjust = 0, linear_method = 2)
-        avg_lambda = calculate_average('lambda.txt')
-        print("beta: "+str(coef) + "   lambda:" + str(avg_lambda))
-        beta_to_lambda[coef] = avg_lambda
+            run(50, Unobserved = 1, Single = 0,  strata_size = 10,adjust = 0)
+        avg_lambda1 = calculate_average('lambda1.txt')
+        print("beta: "+str(coef) + "   lambda1:" + str(avg_lambda1))
+        avg_lambda2 = calculate_average('lambda2.txt')
+        print("beta: "+str(coef) + "   lambda2:" + str(avg_lambda2))
+        avg_lambda3 = calculate_average('lambda3.txt')
+        print("beta: "+str(coef) + "   lambda3:" + str(avg_lambda3))
+    print("=====================================================")
 
-    print(beta_to_lambda)
 

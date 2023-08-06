@@ -1,7 +1,7 @@
 import numpy as np
 import os
 
-def read_npz_files(directory):
+def read_npz_files(directory, small_size=False):
     summed_p_values_median = None
     summed_p_values_LR = None
     summed_p_values_lightGBM = None
@@ -40,15 +40,19 @@ def read_npz_files(directory):
                 else:
                     summed_p_values_oracle += p_values
 
-    results = {
-        'median_power': summed_p_values_median[3] / N,
-        'median_corr': summed_p_values_median[2] / N,
-        'lr_power': summed_p_values_LR[3] / N,
-        'lr_corr': summed_p_values_LR[2] / N,
-        'lightGBM_power': summed_p_values_lightGBM[3] / N,
-        'lightGBM_corr': summed_p_values_lightGBM[2] / N,
-        'oracle_power': summed_p_values_oracle[3] / N,
-        'oracle_corr': summed_p_values_oracle[2] / N,
-    }
+    if small_size:
+        results = {
+            'median_power': summed_p_values_median[3] / N,
+            'lr_power': summed_p_values_LR[3] / N,
+            'xgboost_power': summed_p_values_xgboost[3] / N,
+            'oracle_power': summed_p_values_oracle[3] / N,
+        }
+    else:
+        results = {
+            'median_power': summed_p_values_median[3] / N,
+            'lr_power': summed_p_values_LR[3] / N,
+            'lightGBM_power': summed_p_values_lightGBM[3] / N,
+            'oracle_power': summed_p_values_oracle[3] / N,
+        }
     return results
 

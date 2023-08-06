@@ -15,10 +15,10 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 5000
+L = 10000
 S_size = 10
 
-def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,verbose=1):
+def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,small_size = True, verbose=1):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -56,14 +56,18 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
     # Append p-values to corresponding lists
     values_LR = [ *p_values, reject, test_time]
 
+    #XGBoost
+    if small_size == True:
+        XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
+        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=1)
+        values_xgboost = [*p_values, reject, test_time]
+
     #LightGBM
-    print("LightGBM")
-    #start_time = time.time()
-    LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1), max_iter=max_iter)
-    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size=strata_size,L=L, G=LightGBM, verbose=verbose)
-    #end_time = time.time()
-    values_lightgbm = [*p_values, reject, test_time]
-    #print(f"Execution time for LightGBM: {end_time - start_time} seconds\n")
+    if small_size == False:
+        print("LightGBM")
+        LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1), max_iter=max_iter)
+        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size=strata_size,L=L, G=LightGBM, verbose=verbose)
+        values_lightgbm = [*p_values, reject, test_time]
 
     #Save the file in numpy format
     if(save_file):
@@ -72,16 +76,14 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
             # If the folder does not exist, create it
             os.makedirs("%s/%f"%(filepath,beta_coef))
 
-        # Convert lists to numpy arrays
-        values_median = np.array(values_median)
-        values_LR = np.array(values_LR)
-        values_lightgbm = np.array(values_lightgbm)
-
         # Save numpy arrays to files
         np.save('%s/%f/p_values_oracle_%d.npy' % (filepath, beta_coef, task_id), values_oracle)
         np.save('%s/%f/p_values_median_%d.npy' % (filepath, beta_coef, task_id), values_median)
         np.save('%s/%f/p_values_LR_%d.npy' % (filepath, beta_coef,task_id), values_LR)
-        np.save('%s/%f/p_values_lightGBM_%d.npy' % (filepath, beta_coef, task_id), values_lightgbm)
+        if small_size == False:
+            np.save('%s/%f/p_values_lightGBM_%d.npy' % (filepath, beta_coef, task_id), values_lightgbm)
+        if small_size == True:
+            np.save('%s/%f/p_values_xgboost_%d.npy' % (filepath, beta_coef, task_id), values_xgboost)
 
 if __name__ == '__main__':
 
@@ -95,17 +97,32 @@ if __name__ == '__main__':
     if os.path.exists("Result") == False:
         os.mkdir("Result")
 
-    for coef in np.arange(0.0, 0.03, 0.03): 
-        beta_coef = coef
-        run(1000, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_1000_unobserved" + "_multi", adjust = 0,strata_size = S_size )
-
-    exit()
-    for coef in np.arange(0.0, 0.72, 0.12): 
-        beta_coef = coef
-        run(100, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_100_unobserved" + "_multi", adjust = 0,strata_size = S_size )
-
-
+    # Lambda values dictionary
+    lambda_values = {
+        50: {
+            0.0: [5.46301136050662, 1.7687104800990539, 3.6986401066938748],
+            0.12: [5.507071138438006, 1.8832179319883895, 3.8250507348009557],
+            0.24: [5.629938938721568, 1.9080170719416063, 3.870429428753654],
+            0.36: [5.709076777442875, 1.9590050193610664, 4.018691917409632],
+            0.48: [5.831068183224691, 1.9638039860442473, 4.032046646076915],
+            0.6: [5.890152740793354, 2.0340630188325295, 4.188578787477003]
+        },
+        1000: {
+            0.0: [5.445126353777186, 1.7944628138115826, 3.6890049854144222],
+            0.03: [5.448889434968681, 1.799820386146107, 3.69899976186121],
+            0.06: [5.481108645836731, 1.808888277601773, 3.7215141167626897],
+            0.09: [5.518540969761793, 1.8313022068804186, 3.7592034824941227],
+            0.12: [5.509295189307611, 1.824491093343858, 3.7653155995566836],
+            0.15: [5.5323113856789075, 1.829439262086321, 3.7932522695382818]
+        }
+    }
+    # 1000 size coef loop
     for coef in np.arange(0.0, 0.18, 0.03): 
         beta_coef = coef
-        run(1000, Unobserved = 1, Single = 0, filepath = "Result/HPC_power_1000_unobserved" + "_multi", adjust = 0,strata_size = S_size )
+        run(1000, Unobserved=1, Single=0, filepath="Result/HPC_power_1000_unobserved" + "_multi", adjust=0, strata_size=S_size, Missing_lambda=lambda_values[1000].get(coef, None), small_size=False)
+
+    # 50 size coef loop
+    for coef in np.arange(0.0, 0.72, 0.12): 
+        beta_coef = coef
+        run(50, Unobserved=1, Single=0, filepath="Result/HPC_power_50_unobserved" + "_multi", adjust=0, strata_size=S_size, Missing_lambda=lambda_values[50].get(coef, None), small_size=True)
 

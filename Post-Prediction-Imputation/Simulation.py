@@ -236,9 +236,16 @@ class DataGenerator:
           print(data.describe())
 
         # calculate 1 - Maskrate percentile
-        lambda1 = np.percentile(M_lamda[:,0], 100 * (1-self.MaskRate))
-        lambda2 = np.percentile(M_lamda[:,1], 100 * (1-self.MaskRate))
-        lambda3 = np.percentile(M_lamda[:,2], 100 * (1-self.MaskRate))
+        if self.Missing_lambda:
+          lambda1 = self.Missing_lambda[0]
+          lambda2 = self.Missing_lambda[1]
+          lambda3 = self.Missing_lambda[2]
+
+        #else:
+          #lambda1 = np.percentile(M_lamda[:,0], 100 * (1-self.MaskRate))
+          #lambda2 = np.percentile(M_lamda[:,1], 100 * (1-self.MaskRate))
+          #lambda3 = np.percentile(M_lamda[:,2], 100 * (1-self.MaskRate))
+
             
         for i in range(n):
             values = np.zeros(3)
