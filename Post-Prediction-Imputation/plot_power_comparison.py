@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from analysis_power import read_npz_files
 import matplotlib.pyplot as plt
+import os
 
 
 def plot_results(data, title):
