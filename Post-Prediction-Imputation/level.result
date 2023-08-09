@@ -1,24 +1,23 @@
 Analysis of : Result/HPC_power_1000_unobserved_interference_single/0.000000
 Mean p-values for Median Imputer:
-Power: [0.49103015 0.21621622 4.5425993 ]
+Power: [ 0.50084617  0.05002501 45.17339136]
 Mean p-values for LR Imputer:
-Power: [ 0.50941684  0.18503119 24.88253968]
+Power: [5.04316958e-01 5.30265133e-02 2.51423012e+02]
 Mean p-values for lightGBM Imputer:
-Power: [4.93384615e-01 2.08939709e-01 6.07186054e+02]
+Power: [4.96100250e-01 4.90245123e-02 6.11443147e+03]
+Mean p-values for Oracle Imputer:
+Power: [ 0.50788319  0.19409705 11.32658595]
 Plotting the distribution of the first 6 p-values for each imputer
 Median Imputer
-KstestResult(statistic=0.0254844074844075, pvalue=0.5510966586188447, statistic_location=0.382, statistic_sign=1)
-Proportion of p-values below 0.05: 0.0530
-Proportion of p-values below 0.1: 0.1050
-Proportion of p-values below 0.2: 0.2152
+KstestResult(statistic=0.009761480740370199, pvalue=0.9902463441902287, statistic_location=0.9132, statistic_sign=1)
+Proportion of p-values below 0.05: 0.0495
 LR Imputer
-KstestResult(statistic=0.037532224532224545, pvalue=0.1296843058202043, statistic_location=0.313, statistic_sign=-1)
-Proportion of p-values below 0.05: 0.0499
-Proportion of p-values below 0.1: 0.0988
-Proportion of p-values below 0.2: 0.1850
+KstestResult(statistic=0.012996648324162086, pvalue=0.8838012140520239, statistic_location=0.4197, statistic_sign=-1)
+Proportion of p-values below 0.05: 0.0530
 LightGBM Imputer
-KstestResult(statistic=0.018424116424116455, pvalue=0.8935462834108171, statistic_location=0.598, statistic_sign=1)
-Proportion of p-values below 0.05: 0.0634
-Proportion of p-values below 0.1: 0.1102
-Proportion of p-values below 0.2: 0.2079
+KstestResult(statistic=0.014892896448224113, pvalue=0.7611460722566546, statistic_location=0.5709, statistic_sign=1)
+Proportion of p-values below 0.05: 0.0490
+Oracle Imputer
+KstestResult(statistic=0.018249624812406218, pvalue=0.5125399380714047, statistic_location=0.519, statistic_sign=-1)
+Proportion of p-values below 0.05: 0.0490
 
