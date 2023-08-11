@@ -90,6 +90,7 @@ def plot_p_values_distribution(p_values, imputer_name, file):
         file.write(str(scipy.stats.kstest(p_values[:, i], 'uniform')) + "\n")
         proportion_below_005 = proportions_below_threshold(p_values[:, i], threshold_005)
         file.write(f"Proportion of p-values below {threshold_005}: {proportion_below_005:.4f}\n")
+        file.write(f"Proportion of p-values below {threshold_020}: {proportions_below_threshold(p_values[:, i], threshold_020):.4f}\n")
         continue 
 
 
