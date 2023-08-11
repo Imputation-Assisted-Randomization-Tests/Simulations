@@ -83,12 +83,19 @@ class DataGenerator:
       return eps
 
   def GenerateStrataEps(self):
-      eps = []
+      eps1 = []
+      eps2 = []
+      eps3 = []
 
       for i in range(self.totalStrataNumber):
-          eps.append(np.full((self.strata_size, 3), np.random.normal(0, 0.1)))
+          eps1.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
+          eps2.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
+          eps3.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
 
-      eps = np.concatenate(eps).reshape(-1, 3)
+      eps1 = np.concatenate(eps1)
+      eps2 = np.concatenate(eps2)
+      eps3 = np.concatenate(eps3)
+      eps = np.column_stack((eps1, eps2, eps3))
       return eps
 
   def GenerateY(self, X, U, Z,  StrataEps, IndividualEps):
