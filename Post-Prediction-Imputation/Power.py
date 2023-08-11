@@ -23,7 +23,7 @@ S_size = 10
 #    def transform(self, X):
 #        return self.predict(X)
 
-def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,small_size, Missing_lambda = None,verbose=1):
+def run(Nsize,  Single, filepath, adjust, linear_method, strata_size,small_size, Missing_lambda = None,verbose=1):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -35,13 +35,13 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
     print("Begin")
 
     # Simulate data
-    DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, linear_method = linear_method,verbose=verbose,Missing_lambda = Missing_lambda)
+    DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5, Single=Single, linear_method = linear_method,verbose=verbose,Missing_lambda = Missing_lambda)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
 
     #Oracale imputer
     print("Oracle")
-    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y,strata_size = strata_size, L=L, G = None,verbose=0)
+    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y,strata_size = strata_size, L=L, G = None,verbose=verbose)
     # Append p-values to corresponding lists
     values_oracle = [ *p_values, reject, test_time]
 
@@ -62,13 +62,13 @@ def run(Nsize, Unobserved, Single, filepath, adjust, linear_method, strata_size,
     #XGBoost
     if small_size == True:
         XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
-        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=1)
+        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=verbose)
         values_xgboost = [*p_values, reject, test_time]
 
     #LightGBM
     if small_size == False:
         print("LightGBM")
-        LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1), max_iter=max_iter)
+        LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1,verbosity=-1), max_iter=max_iter)
         p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size=strata_size,L=L, G=LightGBM, verbose=verbose)
         values_lightgbm = [*p_values, reject, test_time]
 
@@ -102,12 +102,12 @@ if __name__ == '__main__':
 
 
     beta_to_lambda = {
-        0.0: 2.190585018478782,
-        0.25: 2.4005415180617367,
-        0.5: 2.4247574115023114,
-        0.75: 2.619155952256185,
-        1.0: 2.595153270291314,
-        1.25: 2.744281729970429
+        0.0: 2.1787055504687562,
+        0.25: 2.28963313895537,
+        0.5: 2.399665894406236,
+        0.75: 2.5410585490501814,
+        1.0: 2.667076303976076,
+        1.25: 2.7966310587259215
     }
     for coef in np.arange(0,1.5,0.25):
         beta_coef = coef
@@ -115,17 +115,17 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
+            run(50, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
     
     beta_to_lambda = {
-        0.0: 2.035857074708517,
-        0.07: 2.174988178649473,
-        0.14: 2.3387202937400846,
-        0.21: 2.3725864425755945,
-        0.28: 2.313569659342935,
-        0.35: 2.315751089091089
+        0.0: 2.1659638283676497,
+        0.07: 2.194178516004058,
+        0.14: 2.221743571595057,
+        0.21:2.295154195430412,
+        0.28: 2.297113192055471,
+        0.35: 2.323331258818355
     }
     for coef in np.arange(0.0,0.42,0.07):
         beta_coef = coef
@@ -133,17 +133,17 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
+            run(1000, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_linearX" + "_single", adjust = 0, linear_method = 0,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
 
     beta_to_lambda = {
-        0.0: 14.491811119136337,
-        0.8: 14.958941428362772,
-        1.6: 15.403478511847414,
-        2.4: 15.720791380016868,
-        3.2: 15.944599814361716,
-        4.0: 16.098830681267856
+        0.0: 14.466047596251755,
+        0.8: 15.004087317365416,
+        1.6: 15.502897225153044,
+        2.4: 15.733688664642346,
+        3.2: 15.946418573067772,
+        4.0: 16.041960504643104
     }
     for coef in np.arange(0.0,4.8,0.8):
         beta_coef = coef
@@ -151,37 +151,36 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
+            run(50,  Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
     
     beta_to_lambda = {
-        0.0: 14.363602621057938,
-        0.18: 14.603768808707162,
-        0.36: 14.59942127025626,
-        0.54: 14.721181497335788,
-        0.72: 14.907266369483425,
-        0.9: 15.043985299562044,
-        1.08: 15.072236396242202
+        0.0: 14.42734092274345,
+        0.2:14.596147664053495,
+        0.4: 14.757131053473609,
+        0.6: 14.876054800271127,
+        0.8: 15.024206311235007,
+        1.0: 15.178766892287648
     }
-    for coef in np.arange(0.0,1.26,0.18):
+    for coef in np.arange(0.0,1.2,0.2):
         beta_coef = coef
         # Round to two decimal places to match dictionary keys
         beta_coef_rounded = round(beta_coef, 2)
         print(beta_coef_rounded)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
+            run(1000, Single = 1, filepath = "Result/HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
     
     beta_to_lambda = {
-        0.0: 14.363917292284167,
-        0.25: 14.868591582739715,
-        0.5: 15.335728550072929,
-        0.75: 15.485908766946375,
-        1.0: 15.500897841516423,
-        1.25: 15.801413524242948
+        0.0: 14.40094013524747,
+        0.25: 14.910720336423797,
+        0.5: 15.263145139161315,
+        0.75: 15.533261334832284,
+        1.0: 15.692701002082288,
+        1.25:15.804622540803644
     }
     for coef in np.arange(0.0,1.5,0.25):
         beta_coef = coef
@@ -189,17 +188,17 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(50, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
+            run(50,Single = 1, filepath = "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
     
     beta_to_lambda = {
-        0.0: 14.396331546692416,
-        0.06: 14.485505560340885,
-        0.12: 14.539825257311756,
-        0.18: 14.605380751276583,
-        0.24: 14.823815159316204,
-        0.3: 14.868493955429921
+        0.0: 14.454744752337417,
+        0.06: 14.569378860946706,
+        0.12: 14.668096269721573,
+        0.18: 14.832998887528781,
+        0.24: 14.902329149357278,
+        0.3: 14.997437855009514
     }
     for coef in np.arange(0.0,0.36,0.06):
         beta_coef = coef
@@ -207,7 +206,7 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Unobserved = 1, Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
+            run(1000,  Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
 

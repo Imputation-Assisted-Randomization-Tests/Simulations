@@ -6,7 +6,7 @@ from random import sample
 
 
 class DataGenerator:
-  def __init__(self,*, N = 1000, strata_size = 10, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3, Unobserved = True, Single = True, linear_method = 0, verbose = False, bias = False, Missing_lambda= None):
+  def __init__(self,*, N = 1000, strata_size = 10, beta_11 = 1, beta_12 = 1, beta_21 = 1, beta_22 = 1, beta_23 = 1, beta_31 = 1,beta_32 = 1, MaskRate = 0.3,  Single = True, linear_method = 0, verbose = False, bias = False, Missing_lambda= None):
     self.N = N
     self.beta_11 = beta_11
     self.beta_12 = beta_12
@@ -18,7 +18,6 @@ class DataGenerator:
     self.beta_31 = beta_31
     self.beta_32 = beta_32
     self.MaskRate = MaskRate
-    self.Unobserved = Unobserved
     self.Single = Single
     self.verbose = verbose
     self.bias = bias
@@ -241,6 +240,9 @@ class DataGenerator:
           data['Yinter'] = M_lamda_YInter[:,0]
           print(data.describe())
           print(pd.DataFrame(M).describe())
+        if self.Missing_lambda == None:
+          with open('lambda.txt', 'a') as f:
+            f.write(str(lambda1) + '\n')
 
         return M
 

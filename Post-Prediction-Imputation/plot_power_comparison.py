@@ -56,7 +56,7 @@ def main():
 
     plot(np.arange(0.0,4.8,0.8),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, Single: linearZ,nonlinearX", small_size=True)
 
-    plot(np.arange(0.0,1.08,0.18),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, Single: linearZ,nonlinearX", small_size=False)
+    plot(np.arange(0.0,1.2,0.2),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, Single: linearZ,nonlinearX", small_size=False)
 
     plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, Single: nonlinearZ,nonlinearX", small_size=True)
 
