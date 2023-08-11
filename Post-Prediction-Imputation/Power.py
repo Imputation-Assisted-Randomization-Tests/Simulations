@@ -15,10 +15,10 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 10000
+L = 1
 S_size = 10
 
-def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,small_size = True, verbose=1):
+def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,small_size = True, verbose=0):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -26,8 +26,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
 
     # Create an instance of the OneShot class
     Framework = Retrain.RetrainTest(N = Nsize, covariance_adjustment=adjust)
-
-    print("Begin")
 
     # Simulate data
     DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, verbose=verbose,Missing_lambda = Missing_lambda)
@@ -38,7 +36,7 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
 
     #Oracale imputer
     print("Oracle")
-    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y,strata_size = strata_size, L=L, G = None,verbose=0)
+    p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y,strata_size = strata_size, L=L, G = None,verbose=verbose)
     # Append p-values to corresponding lists
     values_oracle = [ *p_values, reject, test_time]
 
@@ -59,13 +57,13 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
     #XGBoost
     if small_size == True:
         XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
-        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=1)
+        p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=verbose)
         values_xgboost = [*p_values, reject, test_time]
 
     #LightGBM
     if small_size == False:
         print("LightGBM")
-        LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1), max_iter=max_iter)
+        LightGBM = IterativeImputer(estimator=lgb.LGBMRegressor(n_jobs=1,verbosity=-1), max_iter=max_iter)
         p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size=strata_size,L=L, G=LightGBM, verbose=verbose)
         values_lightgbm = [*p_values, reject, test_time]
 
