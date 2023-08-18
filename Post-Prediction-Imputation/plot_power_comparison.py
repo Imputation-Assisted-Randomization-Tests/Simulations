@@ -57,8 +57,8 @@ def plot(range,dir,title, small_size, xsticks):
 
 def main():
 
-    plot(np.arange(0.0, 0.72, 0.12),"HPC_power__unobserved" + "_multi","Size-100, Multi-missing, U", True, np.arange(0.0, 0.72, 0.12))
+    plot(np.arange(0.0, 0.72, 0.12),"HPC_power_50_unobserved" + "_multi","Size-50, Multi-missing", True, np.arange(0.0, 0.72, 0.12))
 
-    plot(np.arange(0.0, 0.18, 0.03),"HPC_power_1000_unobserved" + "_multi","Size-1000, Multi-missing, U", False, np.arange(0.0, 0.18, 0.03))
+    plot(np.arange(0.0, 0.18, 0.03),"HPC_power_1000_unobserved" + "_multi","Size-1000, Multi-missing", False, np.arange(0.0, 0.18, 0.03))
 
 main()

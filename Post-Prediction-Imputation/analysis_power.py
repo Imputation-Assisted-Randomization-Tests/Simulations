@@ -5,6 +5,7 @@ def read_npz_files(directory, small_size=False):
     summed_p_values_median = None
     summed_p_values_LR = None
     summed_p_values_lightGBM = None
+    summed_p_values_xgboost = None
     summed_p_values_oracle = None
 
     N = int(len(os.listdir(directory)) / 4)
