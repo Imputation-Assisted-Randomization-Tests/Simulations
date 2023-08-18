@@ -4,7 +4,7 @@ from analysis_power import read_npz_files
 import matplotlib.pyplot as plt
 import os
 
-def plot_results(data, title):
+def plot_results(data, title,xsticks):
     columns = ['beta', 'Imputer_Median', 'Imputer_LinearRegression',  'Imputer_GradientBoosting', 'Imputer_Oracle']
 
     df = pd.DataFrame(data, columns=columns)
@@ -25,13 +25,22 @@ def plot_results(data, title):
     plt.title(title)
     plt.legend()
     plt.grid()
+    
+    # Setting y-axis ticks with custom intervals
+    y_ticks = [i/100.0 for i in range(0, 105, 20)]  # Starts from 0, ends at 1.05, with an interval of 0.05
+    y_ticks.append(0.05)
+    plt.yticks(y_ticks)
+
+    X_ticks = xsticks
+    plt.xticks(X_ticks)
+
     #plt.show()
     if not os.path.exists("pic"):
         os.makedirs("pic")
 
     plt.savefig("pic/"+title+".png", format='png', dpi=600) 
 
-def plot(range,dir,title, small_size):
+def plot(range,dir,title, small_size, xsticks):
     print(range)
     data = []
     for coef in range:
@@ -44,13 +53,12 @@ def plot(range,dir,title, small_size):
             else:
                 row_power.extend([results['median_power'], results['lr_power'],results['lightGBM_power'], results['oracle_power']])
         data.append(row_power)
-    plot_results(data,title) 
-
+    plot_results(data,title,xsticks) 
 
 def main():
 
-    plot(np.arange(0.0,0.3 ,0.05),"HPC_power_1000_unobserved_interference" + "_single","Size-1000,Single with Interference", small_size=False)
-    plot(np.arange(0.0,1.2,0.2),"HPC_power_50_unobserved_interference" + "_single","Size-50,Single with Interference", small_size=True)
+    plot(np.arange(0.0,0.3 ,0.05),"HPC_power_1000_unobserved_interference" + "_single","Size-1000, Single: nonlinearZ,nonlinearX with Interference", small_size=False, xsticks=np.arange(0.0,0.3 ,0.05))
+    plot(np.arange(0.0,1.2,0.2),"HPC_power_50_unobserved_interference" + "_single","Size-50, Single: nonlinearZ,nonlinearX with Interference", small_size=True, xsticks=np.arange(0.0,1.2,0.2))
 
     exit()
     #plot(np.arange(0.0,3.1,0.5),"HPC_power_50_linearZ_linearX" + "_single","Size-50, linearZ_linearX, No U")
