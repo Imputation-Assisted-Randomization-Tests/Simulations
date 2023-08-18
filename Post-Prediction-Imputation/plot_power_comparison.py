@@ -4,7 +4,7 @@ from analysis_power import read_npz_files
 import matplotlib.pyplot as plt
 import os
 
-def plot_results(data, title):
+def plot_results(data, title,xsticks):
     columns = ['beta', 'Imputer_Median', 'Imputer_LinearRegression',  'Imputer_GradientBoosting', 'Imputer_Oracle']
 
     df = pd.DataFrame(data, columns=columns)
@@ -25,13 +25,22 @@ def plot_results(data, title):
     plt.title(title)
     plt.legend()
     plt.grid()
+    
+    # Setting y-axis ticks with custom intervals
+    y_ticks = [i/100.0 for i in range(0, 105, 20)]  # Starts from 0, ends at 1.05, with an interval of 0.05
+    y_ticks.append(0.05)
+    plt.yticks(y_ticks)
+
+    X_ticks = xsticks
+    plt.xticks(X_ticks)
+
     #plt.show()
     if not os.path.exists("pic"):
         os.makedirs("pic")
 
     plt.savefig("pic/"+title+".png", format='png', dpi=600) 
 
-def plot(range,dir,title, small_size):
+def plot(range,dir,title, small_size, xsticks):
     print(range)
     data = []
     for coef in range:
@@ -44,12 +53,12 @@ def plot(range,dir,title, small_size):
             else:
                 row_power.extend([results['median_power'], results['lr_power'],results['lightGBM_power'], results['oracle_power']])
         data.append(row_power)
-    plot_results(data,title) 
+    plot_results(data,title,xsticks) 
 
 def main():
 
-    plot(np.arange(0.0, 0.72, 0.12),"HPC_power_100_unobserved" + "_multi","Size-100, Multi-missing, U")
+    plot(np.arange(0.0, 0.72, 0.12),"HPC_power__unobserved" + "_multi","Size-100, Multi-missing, U", True, np.arange(0.0, 0.72, 0.12))
 
-    plot(np.arange(0.0, 0.18, 0.03),"HPC_power_1000_unobserved" + "_multi","Size-1000, Multi-missing, U")
+    plot(np.arange(0.0, 0.18, 0.03),"HPC_power_1000_unobserved" + "_multi","Size-1000, Multi-missing, U", False, np.arange(0.0, 0.18, 0.03))
 
 main()
