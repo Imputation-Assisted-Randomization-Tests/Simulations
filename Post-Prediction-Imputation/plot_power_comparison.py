@@ -6,13 +6,13 @@ import os
 
 
 def plot_results(data, title,xsticks):
-    columns = ['beta', 'Imputer_Median', 'Imputer_LinearRegression',  'Imputer_GradientBoosting', 'Imputer_Oracle']
+    columns = ['beta', 'Imputer_Median', 'Imputer_PREP-RidgeReg',  'Imputer_PREP-GBM', 'Imputer_Oracle']
 
     df = pd.DataFrame(data, columns=columns)
 
     plt.figure(figsize=(10, 6))
 
-    colors = {'Median': 'blue', 'LinearRegression': 'red', 'GradientBoosting': 'orange', 'Oracle':'purple'}
+    colors = {'Median': 'blue', 'PREP-RidgeReg': 'red', 'PREP-GBM': 'orange', 'Oracle':'purple'}
     linestyles = {'Imputer': '-'}
 
     for col in columns[1:]:
@@ -21,9 +21,8 @@ def plot_results(data, title,xsticks):
         linestyle = linestyles[dataset]
         plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle)
         
-    plt.xlabel('Beta')
+    plt.xlabel(r'$\beta$')
     plt.ylabel('Power')
-    plt.title(title)
     plt.legend()
     plt.grid()
     
@@ -40,6 +39,7 @@ def plot_results(data, title,xsticks):
         os.makedirs("pic")
 
     plt.savefig("pic/"+title+".png", format='png', dpi=600) 
+    
 
 def plot(range,dir,title, small_size, xsticks):
     print(range)
