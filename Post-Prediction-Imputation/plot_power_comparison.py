@@ -22,7 +22,7 @@ def plot_results(data, title,xsticks):
         
     plt.xlabel(r'$\beta$')
     plt.ylabel('Power')
-    plt.legend()
+    #plt.legend()
     plt.grid()
     
     # Setting y-axis ticks with custom intervals
