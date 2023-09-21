@@ -22,7 +22,6 @@ def plot_results(data, title,xsticks):
         
     plt.xlabel(r'$\beta$')
     plt.ylabel('Power')
-    plt.legend()
     plt.grid()
     
     # Setting y-axis ticks with custom intervals
@@ -37,7 +36,7 @@ def plot_results(data, title,xsticks):
     if not os.path.exists("pic"):
         os.makedirs("pic")
 
-    plt.savefig("pic/"+title+".png", format='png', dpi=600) 
+    plt.savefig("pic/"+title+".svg", format='svg') 
 
 def plot(range,dir,title, small_size, xsticks):
     print(range)
