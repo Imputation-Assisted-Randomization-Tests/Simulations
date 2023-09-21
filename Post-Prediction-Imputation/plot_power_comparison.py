@@ -20,18 +20,16 @@ def plot_results(data, title,xsticks):
         linestyle = linestyles[dataset]
         plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle)
         
-    plt.xlabel(r'$\beta$')
-    plt.ylabel('Power')
-    #plt.legend()
+    plt.xlabel(r'$\beta$',fontsize=25)
+    plt.ylabel('Power',fontsize=25)
     plt.grid()
-    
     # Setting y-axis ticks with custom intervals
-    y_ticks = [i/100.0 for i in range(0, 105, 20)]  # Starts from 0, ends at 1.05, with an interval of 0.05
+    y_ticks = [i/100.0 for i in range(25, 105, 25)]  # Starts from 0, ends at 1.05, with an interval of 0.05
     y_ticks.append(0.05)
     plt.yticks(y_ticks)
-
     X_ticks = xsticks
     plt.xticks(X_ticks)
+    plt.tick_params(axis='both', which='major', labelsize=25)
 
     #plt.show()
     if not os.path.exists("pic"):
@@ -44,8 +42,8 @@ def plot(range,dir,title, small_size, xsticks):
     data = []
     for coef in range:
         row_power = [coef]
-        print("Result/%s/%f" % (dir,coef))
-        for directory in ["Result/%s/%f" % (dir,coef)]:
+        print("Result_Interference/%s/%f" % (dir,coef))
+        for directory in ["Result_Interference/%s/%f" % (dir,coef)]:
             results = read_npz_files(directory,small_size=small_size)
             if small_size:
                 row_power.extend([results['median_power'], results['lr_power'], results['xgboost_power'],results['oracle_power']])
