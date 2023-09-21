@@ -12,7 +12,7 @@ def plot_results(data, title,xsticks):
 
     plt.figure(figsize=(10, 6))
 
-    colors = {'Median': 'blue', 'PREP-RidgeReg': 'red', 'PREP-GBM': 'orange', 'Oracle':'purple'}
+    colors = {'Median': 'blue', 'PREP-RidgeReg': 'red', 'PREP-GBM': 'green', 'Oracle':'purple'}
     linestyles = {'Imputer': '-'}
 
     for col in columns[1:]:
