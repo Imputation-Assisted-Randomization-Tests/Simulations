@@ -20,18 +20,18 @@ def plot_results(data, title,xsticks):
         dataset = col.split('_')[0]
         linestyle = linestyles[dataset]
         plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle)
-        
-    plt.xlabel(r'$\beta$')
-    plt.ylabel('Power')
-    plt.grid()
     
     # Setting y-axis ticks with custom intervals
-    y_ticks = [i/100.0 for i in range(0, 105, 20)]  # Starts from 0, ends at 1.05, with an interval of 0.05
+    plt.xlabel(r'$\beta$',fontsize=25)
+    plt.ylabel('Power',fontsize=25)
+    plt.grid()
+    # Setting y-axis ticks with custom intervals
+    y_ticks = [i/100.0 for i in range(25, 105, 25)]  # Starts from 0, ends at 1.05, with an interval of 0.05
     y_ticks.append(0.05)
     plt.yticks(y_ticks)
-
     X_ticks = xsticks
     plt.xticks(X_ticks)
+    plt.tick_params(axis='both', which='major', labelsize=25)
 
     #plt.show()
     if not os.path.exists("pic"):
