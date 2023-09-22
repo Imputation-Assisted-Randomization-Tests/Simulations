@@ -154,7 +154,7 @@ class RetrainTest:
                 print("t_missing:",t_missing)
             t.append(t_combined)
 
-        return t
+        return np.array(t).sum()
 
     def retrain_test(self, Z, X, M, Y, G, strata_size, L=10000, verbose = False, shuffle = False):
 
@@ -213,7 +213,7 @@ class RetrainTest:
             print("Permutation Start")
 
         # simulate data and calculate test statistics
-        t_sim = np.zeros((L,Y.shape[1]))
+        t_sim = np.zeros((L))
 
         for l in range(L):
             
@@ -239,8 +239,7 @@ class RetrainTest:
 
         # perform Holm-Bonferroni correction
         p_values = []
-        for i in range(lenY):
-            p_values.append(np.mean(t_sim[:,i] >= t_obs[i], axis=0))
+        p_values.append(np.mean(t_sim[:] >= t_obs, axis=0))
         reject = self.holm_bonferroni(p_values)
 
         end_time = time.time()
@@ -301,7 +300,7 @@ class RetrainTest:
             print("Permutation Start")
 
         # simulate data and calculate test statistics
-        t_sim = np.zeros((L,Y.shape[1]))
+        t_sim = np.zeros((L))
 
         for l in range(L):
             
@@ -332,8 +331,7 @@ class RetrainTest:
 
         # perform Holm-Bonferroni correction
         p_values = []
-        for i in range(lenY):
-            p_values.append(np.mean(t_sim[:,i] >= t_obs[i], axis=0))
+        p_values.append(np.mean(t_sim[:] >= t_obs, axis=0))
         reject = self.holm_bonferroni(p_values)
 
         end_time = time.time()

@@ -18,11 +18,11 @@ def plot_results(data, title,xsticks):
         method = col.split('_')[1]
         dataset = col.split('_')[0]
         linestyle = linestyles[dataset]
-        plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle)
+        plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle, linewidth=4)
     
     
-    plt.xlabel(r'$\beta$',fontsize=25)
-    plt.ylabel('Power',fontsize=25)
+    plt.xlabel(r'$\beta$',fontsize=30)
+    plt.ylabel('Power',fontsize=30)
     plt.grid()
     # Setting y-axis ticks with custom intervals
     y_ticks = [i/100.0 for i in range(25, 105, 25)]  # Starts from 0, ends at 1.05, with an interval of 0.05
@@ -30,7 +30,7 @@ def plot_results(data, title,xsticks):
     plt.yticks(y_ticks)
     X_ticks = xsticks
     plt.xticks(X_ticks)
-    plt.tick_params(axis='both', which='major', labelsize=25)
+    plt.tick_params(axis='both', which='major', labelsize=30)
 
 
     #plt.show()
