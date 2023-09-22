@@ -43,17 +43,17 @@ def read_npz_files(directory, small_size=False):
 
     if small_size:
         results = {
-            'median_power': summed_p_values_median[3] / N,
-            'lr_power': summed_p_values_LR[3] / N,
-            'xgboost_power': summed_p_values_xgboost[3] / N,
-            'oracle_power': summed_p_values_oracle[3] / N,
+            'median_power': summed_p_values_median[1] / N,
+            'lr_power': summed_p_values_LR[1] / N,
+            'xgboost_power': summed_p_values_xgboost[1] / N,
+            'oracle_power': summed_p_values_oracle[1] / N,
         }
     else:
         results = {
-            'median_power': summed_p_values_median[3] / N,
-            'lr_power': summed_p_values_LR[3] / N,
-            'lightGBM_power': summed_p_values_lightGBM[3] / N,
-            'oracle_power': summed_p_values_oracle[3] / N,
+            'median_power': summed_p_values_median[1] / N,
+            'lr_power': summed_p_values_LR[1] / N,
+            'lightGBM_power': summed_p_values_lightGBM[1] / N,
+            'oracle_power': summed_p_values_oracle[1] / N,
         }
     return results
 
