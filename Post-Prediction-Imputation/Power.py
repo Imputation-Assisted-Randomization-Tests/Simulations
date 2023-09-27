@@ -15,7 +15,7 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 10000
+L = 100
 
 S_size = 10
 
