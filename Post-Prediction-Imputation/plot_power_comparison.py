@@ -18,7 +18,7 @@ def plot_results(data, title,xsticks):
         method = col.split('_')[1]
         dataset = col.split('_')[0]
         linestyle = linestyles[dataset]
-        plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle, linewidth=4)
+        plt.plot(df['beta'], df[col], marker='o', label=method, color=colors[method], linestyle=linestyle, linewidth=2)
     
     
     plt.xlabel(r'$\beta$',fontsize=30)
