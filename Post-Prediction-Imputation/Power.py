@@ -10,6 +10,8 @@ import os
 import lightgbm as lgb
 import xgboost as xgb
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 beta_coef = None
 task_id = 1
@@ -32,6 +34,11 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
     DataGen = Generator.DataGenerator(N = Nsize, strata_size=S_size,beta_11 = beta_coef, beta_12 = beta_coef, beta_21 = beta_coef, beta_22 = beta_coef, beta_23 = beta_coef, beta_31 = beta_coef, beta_32 = beta_coef, MaskRate=0.5,Unobserved=Unobserved, Single=Single, verbose=verbose,Missing_lambda = Missing_lambda)
 
     X, Z, U, Y, M, S = DataGen.GenerateData()
+    correlation_matrix = np.corrcoef(Y, rowvar=False)
+    print("Correlation matrix of Y:")
+    print(correlation_matrix)
+    #sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
+    #plt.show()
 
     print(X.shape, Z.shape, U.shape, Y.shape, M.shape, S.shape)
 
