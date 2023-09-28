@@ -36,7 +36,6 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
     correlation_matrix = np.corrcoef(Y, rowvar=False)
     print("Correlation matrix of Y:")
     print(correlation_matrix)
-    exit()
     #sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
     #plt.show()
 
