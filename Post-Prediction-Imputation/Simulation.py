@@ -2,9 +2,7 @@ import numpy as np
 from mv_laplace import MvLaplaceSampler
 import pandas as pd
 from scipy.stats import logistic
-from random import sample
-import seaborn as sns
-import matplotlib.pyplot as plt
+
 
 
 
@@ -310,7 +308,6 @@ class DataGenerator:
     StrataEps = self.GenerateStrataEps()
     IndividualEps = self.GenerateIndividualEps()
     
-
     # Generate Y
     Y = self.GenerateY(X, U, Z, StrataEps, IndividualEps)
 

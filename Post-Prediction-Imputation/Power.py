@@ -10,8 +10,7 @@ import os
 import lightgbm as lgb
 import xgboost as xgb
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+
 
 beta_coef = None
 task_id = 1
