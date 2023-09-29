@@ -141,7 +141,7 @@ class RetrainTest:
         t = []
         for i in range(lenY):
             # Split the data into missing and non-missing parts using the split function
-            y_missing, y_non_missing, z_missing, z_non_missing = self.split(y[:,i], z, M[:,i])
+            """y_missing, y_non_missing, z_missing, z_non_missing = self.split(y[:,i], z, M[:,i])
             
             # Calculate T for missing and non-missing parts
             t_missing = self.T(z_missing, y_missing.reshape(-1,))
@@ -151,7 +151,8 @@ class RetrainTest:
             t_combined = t_missing + t_non_missing
             if verbose:
                 print("t_non_missing:",t_non_missing)
-                print("t_missing:",t_missing)
+                print("t_missing:",t_missing)"""
+            t_combined = self.CombinedT(z.reshape(-1,),y[:,i].reshape(-1,))
             t.append(t_combined)
 
         return t
