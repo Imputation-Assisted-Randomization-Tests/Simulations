@@ -123,7 +123,7 @@ class RetrainTest:
         
         return t
 
-    def split(self, y, z, M):
+    """def split(self, y, z, M):
         #print(y,z,M)
         missing_indices = M[:].astype(bool)
         non_missing_indices = ~missing_indices
@@ -134,14 +134,14 @@ class RetrainTest:
         z_missing = z[missing_indices].reshape(-1,)
         z_non_missing = z[non_missing_indices].reshape(-1,)
 
-        return y_missing, y_non_missing, z_missing, z_non_missing
+        return y_missing, y_non_missing, z_missing, z_non_missing"""
 
     def getT(self, y, z, lenY, M, verbose = False):
 
         t = []
         for i in range(lenY):
             # Split the data into missing and non-missing parts using the split function
-            y_missing, y_non_missing, z_missing, z_non_missing = self.split(y[:,i], z, M[:,i])
+            """y_missing, y_non_missing, z_missing, z_non_missing = self.split(y[:,i], z, M[:,i])
             
             # Calculate T for missing and non-missing parts
             t_missing = self.T(z_missing, y_missing.reshape(-1,))
@@ -152,7 +152,9 @@ class RetrainTest:
             if verbose:
                 print("t_non_missing:",t_non_missing)
                 print("t_missing:",t_missing)
-            t.append(t_combined)
+            t.append(t_combined)"""
+            t_value = self.T(z.reshape(-1,),y[:,i].reshape(-1,))
+            t.append(t_value)
 
         return t
 
