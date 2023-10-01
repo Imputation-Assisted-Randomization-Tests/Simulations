@@ -150,6 +150,12 @@ class DataGenerator:
           sum8 += X[:,p-1] * X[:,p_2-1] * np.cos(1 - 4*X[:,p_3-1])
     sum8 = (1.0  / np.sqrt(5 * 5 )) * sum8  
 
+    sum10 = np.zeros(self.N)
+    for p in range(1,6):
+      for p_2 in range(1,6):
+        for p_3 in range(1,6):
+          sum4 += X[:,p-1] * X[:,p_2-1] * X[:,p_3-1]
+    sum4 = (1.0  / np.sqrt(5 * 5 * 5)) * sum4
     U = U.reshape(-1,)
     Z = Z.reshape(-1,)
     
@@ -157,10 +163,10 @@ class DataGenerator:
     Y_n1 = self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 +sum4 + np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
 
     # Compute Yn2
-    Y_n2 = self.beta_11 * Z + self.beta_22 * Z * (X[:,0])**2 + sum3 + sum8 + StrataEps[:,1] + IndividualEps[:,1]
+    Y_n2 = self.beta_22 * Z * (X[:,0])**2 +self.beta_22 * Z *(U)**2 + sum3 + sum8 + StrataEps[:,1] + IndividualEps[:,1]
 
     # Compute Yn3
-    Y_n3 = self.beta_11 * Z + self.beta_32 * Z * sum5  + sum6  + U +  StrataEps[:,2]  + IndividualEps[:,2]
+    Y_n3 = self.beta_11 * Z + self.beta_32 * Z * sum5  - sum6 + sum10 + U +  StrataEps[:,2]  + IndividualEps[:,2]
   
     Y = np.concatenate((Y_n1.reshape(-1, 1), Y_n2.reshape(-1, 1),Y_n3.reshape(-1, 1)), axis=1) 
   
