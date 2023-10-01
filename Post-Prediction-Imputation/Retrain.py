@@ -149,10 +149,11 @@ class RetrainTest:
 
             # Sum the T values for both parts
             t_combined = t_missing + t_non_missing
-            if verbose:
+            if False and verbose:
                 print("t_non_missing:",t_non_missing)
                 print("t_missing:",t_missing)
             t.append(t_combined)
+
 
         return np.array(t).sum()
 

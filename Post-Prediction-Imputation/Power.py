@@ -20,7 +20,7 @@ L = 100
 
 S_size = 10
 
-def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,small_size = True, verbose=0):
+def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda = None,small_size = True, verbose=1):
 
     # If the folder does not exist, create it
     if not os.path.exists(filepath):
@@ -36,6 +36,7 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
     correlation_matrix = np.corrcoef(Y, rowvar=False)
     print("Correlation matrix of Y:")
     print(correlation_matrix)
+    #exit()
     #sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f")
     #plt.show()
 
@@ -63,6 +64,7 @@ def run(Nsize, Unobserved, Single, filepath, adjust, strata_size, Missing_lambda
 
     #XGBoost
     if small_size == True:
+        print("XGBoost")
         XGBoost = IterativeImputer(estimator=xgb.XGBRegressor(n_jobs=1), max_iter=max_iter)
         p_values, reject, test_time = Framework.retrain_test(Z, X, M, Y, strata_size = strata_size,L=L, G=XGBoost, verbose=verbose)
         values_xgboost = [*p_values, reject, test_time]
@@ -125,7 +127,6 @@ if __name__ == '__main__':
     for coef in np.arange(0.0, 0.18, 0.03): 
         beta_coef = coef
         run(1000, Unobserved=1, Single=0, filepath="Result/HPC_power_1000_unobserved" + "_multi", adjust=0, strata_size=S_size, Missing_lambda=lambda_values[1000].get(coef, None), small_size=False)
-
     # 50 size coef loop
     for coef in np.arange(0.0, 0.72, 0.12): 
         beta_coef = coef

@@ -155,11 +155,11 @@ class DataGenerator:
     U = U.reshape(-1,)
     Z = Z.reshape(-1,)
     
-      # Calculate Y_n1
+    # Calculate Y_n1
     Y_n1 = 1/4 * self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 + sum3 + np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
 
     # Compute Yn2
-    Y_n2 = self.beta_21 * Z  + self.beta_22 * Z * (X[:,0])**2 +self.beta_22 * Z * U**2+ sum4 + StrataEps[:,1] + IndividualEps[:,1]
+    Y_n2 = self.beta_21 * Z  + self.beta_22 * Z * (X[:,0])**2 + sum4 + StrataEps[:,1] + IndividualEps[:,1]
 
     # Compute Yn3
     Y_n3 = self.beta_21 * Z + self.beta_32 * Z * sum5  + sum6 + sum8 + U +  StrataEps[:,2]  + IndividualEps[:,2]
