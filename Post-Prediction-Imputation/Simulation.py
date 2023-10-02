@@ -77,7 +77,7 @@ class DataGenerator:
 
   def GenerateIndividualEps(self):
       mean = 0
-      std = 0.2
+      std = 0.1
       eps = np.random.normal(mean, std, (self.N, 3))
       return eps
 
@@ -87,9 +87,9 @@ class DataGenerator:
       eps3 = []
 
       for i in range(self.totalStrataNumber):
-          eps1.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
-          eps2.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
-          eps3.append(np.full((self.strata_size), np.random.normal(0, 0.1)))
+          eps1.append(np.full((self.strata_size), np.random.normal(0, 0.05)))
+          eps2.append(np.full((self.strata_size), np.random.normal(0, 0.05)))
+          eps3.append(np.full((self.strata_size), np.random.normal(0, 0.05)))
 
       eps1 = np.concatenate(eps1)
       eps2 = np.concatenate(eps2)
@@ -156,13 +156,13 @@ class DataGenerator:
     Z = Z.reshape(-1,)
     
     # Calculate Y_n1
-    Y_n1 = self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 +sum4 #+ np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
+    Y_n1 = self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 +sum4 + np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
 
     # Compute Yn2
-    Y_n2 = self.beta_11 * Z + self.beta_22 * Z * (X[:,0])**2 + self.beta_22 * Z *(U)**2 + sum10 + sum8 #+ StrataEps[:,1] + IndividualEps[:,1]
+    Y_n2 = self.beta_11 * Z + self.beta_22 * Z * (X[:,0])**2 + self.beta_22 * Z *(U)**2 + sum10 + sum8 + StrataEps[:,1] + IndividualEps[:,1]
 
     # Compute Yn3
-    Y_n3 = self.beta_11 * Z + self.beta_32 * Z * sum5 + sum3 #+ U +  StrataEps[:,2]  + IndividualEps[:,2]
+    Y_n3 = self.beta_11 * Z + self.beta_32 * Z * sum5 + sum3 + U +  StrataEps[:,2]  + IndividualEps[:,2]
   
     Y = np.concatenate((Y_n1.reshape(-1, 1), Y_n2.reshape(-1, 1),Y_n3.reshape(-1, 1)), axis=1) 
   
