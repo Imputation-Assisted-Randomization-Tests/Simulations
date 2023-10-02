@@ -77,7 +77,7 @@ class DataGenerator:
 
   def GenerateIndividualEps(self):
       mean = 0
-      std = 0.1
+      std = 0.05
       eps = np.random.normal(mean, std, (self.N, 3))
       return eps
 
@@ -155,14 +155,14 @@ class DataGenerator:
     U = U.reshape(-1,)
     Z = Z.reshape(-1,)
     
-    # Calculate Y_n1
-    Y_n1 = self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 +sum4 + np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
+      # Calculate Y_n1
+    Y_n1 = 1/4 * self.beta_11 * Z + self.beta_12 * Z * sum1   + sum2 + sum3 + np.sin(U) + StrataEps[:,0]  + IndividualEps[:,0]
 
     # Compute Yn2
-    Y_n2 = self.beta_11 * Z + self.beta_22 * Z * (X[:,0])**2 + self.beta_22 * Z *(U)**2 + sum10 + sum8 + StrataEps[:,1] + IndividualEps[:,1]
+    Y_n2 = self.beta_21 * Z  + self.beta_22 * Z * X[:,0] + self.beta_23 * Z * U  - sum4 + StrataEps[:,1] + IndividualEps[:,1]
 
     # Compute Yn3
-    Y_n3 = self.beta_11 * Z + self.beta_32 * Z * sum5 + sum3 + U +  StrataEps[:,2]  + IndividualEps[:,2]
+    Y_n3 = self.beta_21 * Z + self.beta_32 * Z * sum5  + sum3 + sum8 + U +  StrataEps[:,2]  + IndividualEps[:,2]
   
     Y = np.concatenate((Y_n1.reshape(-1, 1), Y_n2.reshape(-1, 1),Y_n3.reshape(-1, 1)), axis=1) 
   
