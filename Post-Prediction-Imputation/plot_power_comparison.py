@@ -45,8 +45,8 @@ def plot(range,dir,title, small_size, xsticks):
     data = []
     for coef in range:
         row_power = [coef]
-        print("Result_3Model/%s/%f" % (dir,coef))
-        for directory in ["Result_3Model/%s/%f" % (dir,coef)]:
+        print("Result/%s/%f" % (dir,coef))
+        for directory in ["Result/%s/%f" % (dir,coef)]:
             results = read_npz_files(directory,small_size=small_size)
             if small_size:
                 row_power.extend([results['median_power'], results['lr_power'], results['xgboost_power'],results['oracle_power']])
