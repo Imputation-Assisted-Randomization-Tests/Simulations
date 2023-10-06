@@ -136,6 +136,12 @@ class DataGenerator:
       sum5 += np.absolute(X[:,p-1])
     sum5 = (1.0  / np.sqrt(5)) * sum5
 
+    sum8 = np.zeros(self.N)
+    for p in range(1,6):
+      for p_2 in range(1,6):
+        for p_3 in range(1,6):
+          sum8 += X[:,p-1] * X[:,p_2-1] * np.cos(1 - 4*X[:,p_3-1])
+    sum8 = (1.0  / np.sqrt(5 * 5 )) * sum8  
     U = U.reshape(-1,)
     Z = Z.reshape(-1,)
 
@@ -147,7 +153,7 @@ class DataGenerator:
       data = pd.DataFrame({'Y_n3_Z': Y_n3_Z, 'Y_n3_X': Y_n3_X, 'Y_n3_U': Y_n3_U})
       print(data.describe())
 
-    Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4  + U +  StrataEps+ IndividualEps
+    Y_n3 = self.beta_32 * Z +  self.beta_22 * Z * X[:,0]+ self.beta_12 * Z * sum5 + sum3 + sum4 +sum8 + U +  StrataEps+ IndividualEps
     
     Y = Y_n3.reshape(-1, 1)
 
