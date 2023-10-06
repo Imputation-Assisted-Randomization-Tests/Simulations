@@ -15,7 +15,7 @@ beta_coef = None
 task_id = 1
 save_file = False
 max_iter = 3
-L = 10000
+L = 100
 S_size = 10
 
 def run(Nsize, Single, filepath, adjust, Missing_lambda,strata_size, small_size,verbose=1):
@@ -111,7 +111,7 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef, 2)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(1000, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjusted" + "_single", adjust = 2, strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
+            #run(1000, Single = 1, filepath = "Result/HPC_power_1000_unobserved_interference_adjusted" + "_single", adjust = 2, strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
 
@@ -131,6 +131,8 @@ if __name__ == '__main__':
         beta_coef_rounded = round(beta_coef)
         if beta_coef_rounded in beta_to_lambda:
             lambda_value = beta_to_lambda[beta_coef_rounded]
-            run(50, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference_adjusted" + "_single", adjust = 1, strata_size = S_size,  Missing_lambda = lambda_value,small_size=True)
+            run(50, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference_adjusted_1" + "_single", adjust = 1, strata_size = S_size,  Missing_lambda = lambda_value,small_size=True)
+            run(50, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference_adjusted_2" + "_single", adjust = 2, strata_size = S_size,  Missing_lambda = lambda_value,small_size=True)
+            run(50, Single = 1, filepath = "Result/HPC_power_50_unobserved_interference_adjusted_3" + "_single", adjust = 3, strata_size = S_size,  Missing_lambda = lambda_value,small_size=True)
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
