@@ -19,10 +19,6 @@ max_iter = 3
 L = 10000
 S_size = 10
 
-#class CatBoostRegressorForImputer(CatBoostRegressor):
-#    def transform(self, X):
-#        return self.predict(X)
-
 def run(Nsize,  Single, filepath, adjust, linear_method, strata_size,small_size, Missing_lambda = None,verbose=1):
 
     # If the folder does not exist, create it
@@ -101,7 +97,7 @@ if __name__ == '__main__':
         os.mkdir("Result")
 
 
-    beta_to_lambda = {
+    """beta_to_lambda = {
         0.0: 2.1787055504687562,
         0.25: 2.28963313895537,
         0.5: 2.399665894406236,
@@ -153,15 +149,15 @@ if __name__ == '__main__':
             lambda_value = beta_to_lambda[beta_coef_rounded]
             run(50,  Single = 1, filepath = "Result/HPC_power_50_unobserved_linearZ_nonlinearX" + "_single", adjust = 0, linear_method = 1,strata_size = S_size, Missing_lambda = lambda_value, small_size=True)
         else:
-            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
+            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")"""
     
     beta_to_lambda = {
-        0.0: 14.42734092274345,
-        0.2:14.596147664053495,
-        0.4: 14.757131053473609,
-        0.6: 14.876054800271127,
-        0.8: 15.024206311235007,
-        1.0: 15.178766892287648
+        0.0: 14.451565057932825,
+        0.16:14.540597815897756,
+        0.32: 14.659902891608024,
+        0.48: 14.777045822738945,
+        0.64: 14.96488892601364,
+        0.8: 15.053466853168157,
     }
     for coef in np.arange(0.0,1.2,0.2):
         beta_coef = coef
@@ -174,7 +170,7 @@ if __name__ == '__main__':
         else:
             print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
     
-    beta_to_lambda = {
+    """beta_to_lambda = {
         0.0: 14.40094013524747,
         0.25: 14.910720336423797,
         0.5: 15.263145139161315,
@@ -208,5 +204,5 @@ if __name__ == '__main__':
             lambda_value = beta_to_lambda[beta_coef_rounded]
             run(1000,  Single = 1, filepath = "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single", adjust = 0, linear_method = 2,strata_size = S_size, Missing_lambda = lambda_value, small_size=False)
         else:
-            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")
+            print(f"No lambda value found for beta_coef: {beta_coef_rounded}")"""
 

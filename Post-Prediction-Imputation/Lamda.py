@@ -48,7 +48,7 @@ def calculate_average(filename):
 if __name__ == '__main__':
     beta_to_lambda = {}
 
-    coef_ranges = [(0,1.5,0.25), (0.0,0.42,0.07), (0.0,4.8,0.8), (0.0,1.2,0.2), (0.0,1.5,0.25), (0.0,0.36,0.06)]
+    coef_ranges = [(0,1.5,0.25), (0.0,0.42,0.07), (0.0,4.8,0.8), (0.0,0.96,0.16), (0.0,1.5,0.25), (0.0,0.36,0.06)]
     filepath_prefixes = ["Result/HPC_power_50_unobserved_linearZ_linearX", "Result/HPC_power_1000_unobserved_linearZ_linearX", 
                         "Result/HPC_power_50_unobserved_linearZ_nonlinearX", "Result/HPC_power_1000_unobserved_linearZ_nonlinearX", 
                         "Result/HPC_power_50_unobserved_nonlinearZ_nonlinearX", "Result/HPC_power_1000_unobserved_nonlinearZ_nonlinearX"]

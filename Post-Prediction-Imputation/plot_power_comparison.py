@@ -40,6 +40,7 @@ def plot_results(data, title,xsticks):
     plt.savefig("pic/" + title + ".svg", format='svg')
     
 
+
 def plot(range,dir,title, small_size, xsticks):
     print(range)
     data = []
@@ -53,7 +54,10 @@ def plot(range,dir,title, small_size, xsticks):
             else:
                 row_power.extend([results['median_power'], results['lr_power'],results['lightGBM_power'], results['oracle_power']])
         data.append(row_power)
+    print(data)
     plot_results(data,title,xsticks) 
+
+
 
 
 def main():
