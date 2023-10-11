@@ -62,16 +62,16 @@ def plot(range,dir,title, small_size, xsticks):
 
 def main():
 
-    plot(np.arange(0,1.5,0.25),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, Single:linearZ_linearX", small_size=True, xsticks=np.arange(0,1.5,0.25))
+    #plot(np.arange(0,1.5,0.25),"HPC_power_50_unobserved_linearZ_linearX" + "_single","Size-50, Single:linearZ_linearX", small_size=True, xsticks=np.arange(0,1.5,0.25))
 
-    plot(np.arange(0.0,0.42,0.07),"HPC_power_1000_unobserved_linearZ_linearX" + "_single","Size-1000, Single: linearZ,linearX", small_size=False, xsticks=np.arange(0.0,0.42,0.07))
+    #plot(np.arange(0.0,0.42,0.07),"HPC_power_1000_unobserved_linearZ_linearX" + "_single","Size-1000, Single: linearZ,linearX", small_size=False, xsticks=np.arange(0.0,0.42,0.07))
 
-    plot(np.arange(0.0,4.8,0.8),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, Single: linearZ,nonlinearX", small_size=True, xsticks=np.arange(0.0,4.8,0.8))
+    #plot(np.arange(0.0,4.8,0.8),"HPC_power_50_unobserved_linearZ_nonlinearX" + "_single","Size-50, Single: linearZ,nonlinearX", small_size=True, xsticks=np.arange(0.0,4.8,0.8))
 
-    plot(np.arange(0.0,1.2,0.2),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, Single: linearZ,nonlinearX", small_size=False,  xsticks=np.arange(0.0,1.2,0.2))
+    plot(np.arange(0.0,0.96,0.16),"HPC_power_1000_unobserved_linearZ_nonlinearX" + "_single","Size-1000, Single: linearZ,nonlinearX", small_size=False,  xsticks=np.arange(0.0,1.2,0.2))
 
-    plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, Single: nonlinearZ,nonlinearX", small_size=True, xsticks=np.arange(0.0,1.5,0.25))
+    #plot(np.arange(0.0,1.5,0.25),"HPC_power_50_unobserved_nonlinearZ_nonlinearX" + "_single","Size-50, Single: nonlinearZ,nonlinearX", small_size=True, xsticks=np.arange(0.0,1.5,0.25))
 
-    plot(np.arange(0.0,0.36,0.06),"HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-1000, Single: nonlinearZ,nonlinearX", small_size=False, xsticks=np.arange(0.0,0.36,0.06))
+    #plot(np.arange(0.0,0.36,0.06),"HPC_power_1000_unobserved_nonlinearZ_nonlinearX" + "_single","Size-1000, Single: nonlinearZ,nonlinearX", small_size=False, xsticks=np.arange(0.0,0.36,0.06))
 
 main()
